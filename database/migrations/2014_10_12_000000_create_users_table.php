@@ -13,16 +13,15 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('tb_user', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('jabatan_id');
+            $table->unsignedBigInteger('jabatanId')->nullable();
             $table->string('nip');
-            $table->string('nm_user');
-            $table->string('username');
+            $table->string('namaUser');
             $table->string('email');
             $table->string('password');
             $table->string('telephone')->nullable();;
-            $table->enum('level_user',['pimpinan','staf_tu','admin']);
+            $table->enum('hakAkses',['pimpinan','staf_tu','admin']);
             $table->enum('status',['aktif','nonaktif'])->defaul('aktif');
             $table->rememberToken();
             $table->timestamps();

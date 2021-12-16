@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\JabatanController;
+use App\Http\Controllers\Tu\StafTuDashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+//Route Admin
 Route::group(['prefix'  => 'admin/'],function(){
     Route::get('/',[DashboardController::class, 'dashboard'])->name('admin.dashboard');
 
@@ -36,3 +38,7 @@ Route::group(['prefix'  => 'admin/'],function(){
     });
 });
 
+//Route Staf Tata Usaha
+Route::group(['prefix'  => 'staf_tu/'],function(){
+    Route::get('/',[StafTuDashboardController::class, 'dashboard'])->name('staf_tu.dashboard');
+});

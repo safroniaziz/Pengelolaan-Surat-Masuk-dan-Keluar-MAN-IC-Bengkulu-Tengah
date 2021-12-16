@@ -15,10 +15,11 @@ class CreateTbDisposisiSuratTable extends Migration
     {
         Schema::create('tb_disposisi_surat', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('surat_masuk_id');
-            $table->unsignedBigInteger('pengirim_id')->nullable();
-            $table->unsignedBigInteger('penerima_id')->nullable();
-            $table->enum('status_disposisi',['sudah','belum']);
+            $table->unsignedBigInteger('suratMasukId');
+            $table->unsignedBigInteger('pengirimId')->nullable();
+            $table->unsignedBigInteger('penerimaId')->nullable();
+            $table->enum('statusDisposisi',['sudah','belum']);
+            $table->enum('statusBacaDisposisi',['sudah','belum']);
             $table->timestamps();
         });
     }

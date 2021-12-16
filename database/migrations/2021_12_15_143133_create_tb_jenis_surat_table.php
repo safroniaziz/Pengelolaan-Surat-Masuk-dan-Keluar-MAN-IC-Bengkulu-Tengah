@@ -15,7 +15,7 @@ class CreateTbJenisSuratTable extends Migration
     {
         Schema::create('tb_jenis_surat', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis_surat');
+            $table->string('jenisSurat');
             $table->timestamps();
         });
     }
