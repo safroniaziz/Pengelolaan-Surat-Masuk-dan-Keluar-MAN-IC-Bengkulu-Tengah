@@ -15,17 +15,17 @@ class CreateTbSuratMasukTable extends Migration
     {
         Schema::create('tb_surat_masuk', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('jenis_surat_id');
-            $table->string('pengirim_surat');
-            $table->string('no_surat')->length(30)->unique();
+            $table->unsignedBigInteger('jenisSuratId');
+            $table->string('pengirimSurat');
+            $table->string('nomorSurat')->length(30)->unique();
             $table->string('perihal')->nullable();
             $table->string('tujuan')->nullable();
             $table->string('lampiran')->nullable();
             $table->string('catatan')->nullable();
-            $table->enum('sifat_surat',['penting','segera','rahasia','biasa']);
-            $table->date('tanggal_surat');
-            $table->enum('status_teruskan',['sudah','belum']);
-            $table->enum('status_baca',['sudah','belum']);
+            $table->enum('sifatSurat',['penting','segera','rahasia','biasa']);
+            $table->date('tanggalSurat');
+            $table->enum('statusTeruskan',['sudah','belum']);
+            $table->enum('statusBaca',['sudah','belum']);
             $table->timestamps();
         });
     }

@@ -7,10 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\Jabatan;
 use Illuminate\Support\Facades\DB;
 
-
-
 class JabatanController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth','IsAdmin']);
+    }
+
     public function index(){
         $jabatans = Jabatan::all();
         return view('admin/jabatan.index',compact('jabatans'));
@@ -36,19 +40,11 @@ class JabatanController extends Controller
         ];
         $this->validate($request, [
             'nm_jabatan'    =>  'required',
-        
-          
-    
-           
         ],$messages,$attributes);
-
-      
        
         Jabatan::create([
-       
             'nm_jabatan'    =>  $request->nm_jabatan,
             'keterangan'    =>  $request->keterangan,
-    
         ]);
 
         $notification = array(

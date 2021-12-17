@@ -23,7 +23,33 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                // return redirect(RouteServiceProvider::HOME);
+                if (auth()->user()->hakAkses == "admin") {
+                    $notification1 = array(
+                        'message' => 'Berhasil, akun login sebagai admin!',
+                        'alert-type' => 'success'
+                    );
+                    return redirect()->route('admin.dashboard')->with($notification1);;
+                }elseif (auth()->user()->hakAkses == "staf_tu") {
+                    $notification2 = array(
+                        'message' => 'Berhasil, anda login sebagai Staf Tata Usaha!',
+                        'alert-type' => 'success'
+                    );
+                    return redirect()->route('staf_tu.dashboard')->with($notification2);;
+                } elseif (auth()->user()->hakAkses == "pimpinan") {
+                    $notification2 = array(
+                        'message' => 'Berhasil, anda login sebagai Pimpinan!',
+                        'alert-type' => 'success'
+                    );
+                    return redirect()->route('pimpinan.dashboard')->with($notification2);;
+                } else {
+                    Auth::logout();
+                    $notification = array(
+                        'message' => 'Gagal, akun anda tidak dikenali!',
+                        'alert-type' => 'error'
+                    );
+                    return redirect()->route('login')->with($notification);
+                }
             }
         }
 
