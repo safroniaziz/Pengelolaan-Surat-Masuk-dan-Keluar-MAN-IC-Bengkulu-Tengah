@@ -29,10 +29,12 @@ Route::group(['prefix'  => 'admin/'],function(){
 
     Route::group(['prefix'  => 'manajemen_jabatan'],function(){
         Route::get('/',[JabatanController::class, 'index'])->name('admin.jabatan');
+        Route::get('/add',[JabatanController::class, 'add'])->name('admin.jabatan.add');
+
         Route::post('/',[JabatanController::class, 'post'])->name('admin.jabatan.post');
         Route::get('/{id}/edit',[JabatanController::class, 'edit'])->name('admin.jabatan.edit');
         Route::patch('/',[JabatanController::class, 'update'])->name('admin.jabatan.update');
-        Route::delete('/',[JabatanController::class, 'delete'])->name('admin.jabatan.delete');
+        Route::delete('{id}/delete',[JabatanController::class, 'delete'])->name('admin.jabatan.delete');
     });
 });
 
