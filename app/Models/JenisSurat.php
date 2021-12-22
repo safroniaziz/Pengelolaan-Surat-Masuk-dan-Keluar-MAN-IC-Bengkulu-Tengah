@@ -5,7 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JanisSurat extends Model
+class JenisSurat extends Model
 {
     use HasFactory;
+    protected $table = 'tb_jenis_surat';
+    protected $fillable = [
+        'jenisSurat',
+     
+    ];
 }

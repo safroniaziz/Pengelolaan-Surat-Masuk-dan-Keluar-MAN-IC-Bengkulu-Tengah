@@ -10,6 +10,17 @@ class SuratMasuk extends Model
     use HasFactory;
     protected $table = 'tb_surat_masuk';
     protected $fillable = [
-        ''
+        'jenisSuratId',
+        'nomorSurat',
+        'pengirimSurat',
+        'perihal',
+        'tujuan',
+        'lampiran',
+        'catatan',
+        'sifatSurat',
+        'tanggalSurat',
+        'statusTeruskan',
+        'statusBaca'
+
     ];
 }

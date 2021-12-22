@@ -40,30 +40,22 @@
                     </div>
                 </div>
                 <div class="row">
-                    <form action="{{ route('admin.jabatan.post') }}" enctype="multipart/form-data" method="POST">
-                        {{ csrf_field() }} {{ method_field('POST') }}
+                    <form action="{{ route('admin.jenis_surat.update',[$data->id]) }}" enctype="multipart/form-data" method="POST">
+                        {{ csrf_field() }} {{ method_field('PATCH') }}
                         <div class="col-md-12">
                         
 
                             <div class="form-group col-md-8">
-                                <label for="exampleInputEmail1">Nama Jabatan</label>
-                                <input type="text" name="nm_jabatan" class="tags form-control @error('nm_jabatan') is-invalid @enderror" />
+                                <label for="exampleInputEmail1">Jenis Surat</label>
+                                <input type="text" name="jenisSurat" value="{{ $data->jenisSurat }}" class="tags form-control @error('jenisSurat') is-invalid @enderror" />
                                 <div>
-                                    @if ($errors->has('nm_jabatan'))
-                                        <small class="form-text text-danger">{{ $errors->first('nm_jabatan') }}</small>
+                                    @if ($errors->has('jenisSurat'))
+                                        <small class="form-text text-danger">{{ $errors->first('jenisSurat') }}</small>
                                     @endif
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-8">
-                                <label for="exampleInputEmail1">Keterangan</label>
-                                <input type="text" name="keterangan" class="tags form-control @error('keterangan') is-invalid @enderror" />
-                                <div>
-                                    @if ($errors->has('keterangan'))
-                                        <small class="form-text text-danger">{{ $errors->first('keterangan') }}</small>
-                                    @endif
-                                </div>
-                            </div>
+                        
 
                           
 

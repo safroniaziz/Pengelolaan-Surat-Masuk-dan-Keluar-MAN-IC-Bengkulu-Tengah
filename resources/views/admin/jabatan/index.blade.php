@@ -89,7 +89,7 @@
                                 <th>Keterangan</th>
             
                            
-                                <th>Download Dokumen</th>
+                              
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -101,13 +101,11 @@
                             <tr>
                                 <td>{{ $no++ }}</td>
                             
-                                <td>{{ $jabatan->nm_jabatan }}</td>
+                                <td>{{ $jabatan->namaJabatan }}</td>
                                 <td>{{ $jabatan->keterangan }}</td>
              
                             
-                                <td>
-                                    {{--  <a class="btn btn-primary btn-sm" href="{{ asset('upload/dokumen_jabatan/'.\Illuminate\Support\Str::slug(Auth::user()->pegNama).'/'.$jabatan->tgsDokumen) }}" download="{{ $jabatan->tgsDokumen }}"><i class="fa fa-download"></i>&nbsp; Download</a>  --}}
-                                </td>
+                             
                                 <td>
                                     <a href="{{ route('admin.jabatan.edit',[$jabatan->id]) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>&nbsp; Edit</a>
                                     <form action="{{ route('admin.jabatan.delete',[$jabatan->id]) }}" method="POST">
@@ -125,7 +123,7 @@
                     <div class="modal fade modal-danger" id="modalhapus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <form action=" {{ route('admin.jabatan.delete') }} " method="POST">
+                                <form action="{{ route('admin.jabatan.delete',[$jabatan->id]) }}"method="POST">
                                     {{ csrf_field() }} {{ method_field('DELETE') }}
                                     <div class="modal-header">
                                         <p style="font-size:15px; font-weight:bold;" class="modal-title"><i class="fa fa-trash"></i>&nbsp;Form Konfirmasi Hapus Data</p>

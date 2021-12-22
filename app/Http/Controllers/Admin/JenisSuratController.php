@@ -4,27 +4,26 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Jabatan;
+use App\Models\JenisSurat;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-class JabatanController extends Controller
+class JenisSuratController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware(['auth','IsAdmin']);
     }
 
     public function index(){
-        $jabatans = Jabatan::all();
-        return view('admin/jabatan.index',compact('jabatans'));
+        $jenissurats = JenisSurat::all();
+        return view('admin/jenis_surat.index',compact('jenissurats'));
     }
     public function add(){
-        $jabatan = DB::table('tb_jabatan')->select('nm_jabatan','keterangan')->get();
+        $jenissurat = DB::table('tb_jenis_surat')->select('jenisSurat')->get();
        
-        return view('admin/jabatan.add',compact('jabatan'));
+        return view('admin/jenis_surat.add',compact('jenissurat'));
     }
     public function post(Request $request){
         $messages = [
@@ -36,30 +35,30 @@ class JabatanController extends Controller
             ],
         ];
         $attributes = [
-            'nm_jabatan'   =>  'Nama Jabatan',
+            'jenisSurat'   =>  'Nama JenisSurat',
             'keterangan'   =>  'keterangan',
       
         ];
         $this->validate($request, [
-            'nm_jabatan'    =>  'required',
+            'jenisSurat'    =>  'required',
         ],$messages,$attributes);
        
-        Jabatan::create([
-            'namaJabatan'    =>  $request->nm_jabatan,
-            'keterangan'    =>  $request->keterangan,
+        JenisSurat::create([
+            'jenisSurat'    =>  $request->jenisSurat,
+           
         ]);
 
         $notification = array(
-            'message' => 'Berhasil, data jabatan berhasil ditambahkan!',
+            'message' => 'Berhasil, data jenissurat berhasil ditambahkan!',
             'alert-type' => 'success'
         );
-        return redirect()->route('admin.jabatan')->with($notification);
+        return redirect()->route('admin.jenis_surat')->with($notification);
     }
 
     public function edit($id){
-        $data = Jabatan::where('id',$id)->first();
+        $data = JenisSurat::where('id',$id)->first();
      
-        return view('admin/jabatan.edit',compact('data'));
+        return view('admin/jenis_surat.edit',compact('data'));
     }
     public function update(Request $request, $id){
         $messages = [
@@ -67,31 +66,29 @@ class JabatanController extends Controller
             'numeric' => ':attribute harus angka',
         ];
         $attributes = [
-            'namaJabatan'   =>  ' Jabatan',
+            'namaJenisSurat'   =>  ' JenisSurat',
             'keterangan'   =>  ' Keterangan',
         ];
         $this->validate($request, [
         ],$messages,$attributes);
         
-        Jabatan::where('id',$id)->update([
-                'namaJabatan'    =>  $request->nm_jabatan,
-                'keterangan'    =>  $request->keterangan,
+        JenisSurat::where('id',$id)->update([
+                'jenisSurat'    =>  $request->jenisSurat,
+           
             ]);
 
             $notification = array(
-                'message' => 'Berhasil, data jabatan berhasil ditambahkan!',
+                'message' => 'Berhasil, data jenis_surat berhasil ditambahkan!',
                 'alert-type' => 'success'
             );
-            return redirect()->route('admin.jabatan')->with($notification);
+            return redirect()->route('admin.jenis_surat')->with($notification);
         }
     public function delete($id){
-        Jabatan::where('id',$id)->delete();
+        JenisSurat::where('id',$id)->delete();
         $notification = array(
-            'message' => 'Berhasil, data jabatan berhasil dihapus!',
+            'message' => 'Berhasil, data jenis_surat berhasil dihapus!',
             'alert-type' => 'success'
         );
-        return redirect()->route('admin.jabatan')->with($notification);
+        return redirect()->route('admin.jenis_surat')->with($notification);
     }
-
-    
 }
