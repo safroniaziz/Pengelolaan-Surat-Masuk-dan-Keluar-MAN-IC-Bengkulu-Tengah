@@ -41,7 +41,7 @@ class JabatanController extends Controller
       
         ];
         $this->validate($request, [
-            // 'nm_jabatan'    =>  'required',
+            'nm_jabatan'    =>  'required',
         ],$messages,$attributes);
        
         Jabatan::create([
