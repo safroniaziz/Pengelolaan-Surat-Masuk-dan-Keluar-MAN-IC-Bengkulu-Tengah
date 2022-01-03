@@ -19,12 +19,7 @@
     <style>
         #chartdiv, #chartdiv2 {
             width: 100%;
-            height: 200px;
-        }
-
-        #chartdiv3, #chartdiv4 {
-            width: 100%;
-            height: 300px;
+            height: 500px;
         }
     </style>
 @endpush
@@ -55,7 +50,13 @@
                             <!-- small box -->
                             <div class="small-box bg-aqua" style="margin-bottom:0px;">
                                 <div class="inner">
-                                <h3> </h3>
+                                <h3>
+                                    @if (!empty($surat_masuk))
+                                        {{ $surat_masuk }}
+                                        @else
+                                        0
+                                    @endif
+                                </h3>
 
                                 <p>Jumlah Surat Masuk</p>
                                 </div>
@@ -69,7 +70,13 @@
                             <!-- small box -->
                             <div class="small-box bg-red" style="margin-bottom:0px;">
                                 <div class="inner">
-                                <h3></h3>
+                                <h3>
+                                    @if (!empty($surat_keluar))
+                                        {{ $surat_keluar }}
+                                        @else
+                                        0
+                                    @endif
+                                </h3>
 
                                 <p> Jumlah Surat Keluar</p>
                                 </div>
@@ -83,7 +90,13 @@
                             <!-- small box -->
                             <div class="small-box bg-yellow" style="margin-bottom:0px;">
                                 <div class="inner">
-                                <h3></h3>
+                                <h3>
+                                    @if (!empty($masuk_hari_ini))
+                                        {{ $masuk_hari_ini }}
+                                        @else
+                                        0
+                                    @endif
+                                </h3>
 
                                 <p>Surat Masuk Hari Ini</p>
                                 </div>
@@ -97,7 +110,13 @@
                             <!-- small box -->
                             <div class="small-box bg-green" style="margin-bottom:0px;">
                                 <div class="inner">
-                                <h3></h3>
+                                <h3>
+                                    @if (!empty($keluar_hari_ini))
+                                        {{ $keluar_hari_ini }}
+                                        @else
+                                        0
+                                    @endif
+                                </h3>
 
                                 <p>Surat Keluar Hari Ini</p>
                                 </div>
@@ -124,12 +143,12 @@
                         <div class="col-md-12">
                             @section('charts')
                                 chart.data = [
-                                    {{-- @foreach ($perUnit as $data)
+                                    @foreach ($persentase as $data)
                                         {
-                                            "country": "{{ substr($data['nm_unit'],11) }}",
-                                            "litres": umlah'] }}
+                                            "country": "{{ $data['title'] }}",
+                                            "litres": {{ $data['jumlah'] }}
                                         },
-                                    @endforeach --}}
+                                    @endforeach
                                 ];
                             @endsection
                             <div id="chartdiv"></div>
@@ -149,12 +168,12 @@
                         <div class="col-md-12">
                             @section('charts2')
                                 chart.data = [
-                                    {{-- @foreach ($perKlasifikasi as $data)
+                                    @foreach ($persentase as $data)
                                         {
-                                            "country2": "m_klasifikasi'] }}",
-                                            "litres2": umlah'] }}
+                                                "country": "{{ $data['title'] }}",
+                                            "visits": {{ $data['jumlah'] }}
                                         },
-                                    @endforeach --}}
+                                    @endforeach
                                 ];
                             @endsection
                             <div id="chartdiv2"></div>
@@ -201,32 +220,53 @@
 
         }); // end am4core.ready()
     </script>
-    <script>
-        am4core.ready(function() {
+    <!-- Resources -->
+  <script src="{{ asset('assets/offline/cdn/core.js') }}"></script>
+  <script src="{{ asset('assets/offline/cdn/charts.js') }}"></script>
+  <script src="{{ asset('assets/offline/cdn/animated.js') }}"></script>
 
-        // Themes begin
-        am4core.useTheme(am4themes_animated);
-        // Themes end
+<!-- Chart code -->
+<script>
+am4core.ready(function() {
 
-        // Create chart instance
-        var chart = am4core.create("chartdiv2", am4charts.PieChart);
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
 
-        // Add data
-        @yield('charts2')
+// Create chart instance
+var chart = am4core.create("chartdiv2", am4charts.XYChart);
 
-        // Add and configure Series
-        var pieSeries = chart.series.push(new am4charts.PieSeries());
-        pieSeries.dataFields.value = "litres2";
-        pieSeries.dataFields.category = "country2";
-        pieSeries.slices.template.stroke = am4core.color("#fff");
-        pieSeries.slices.template.strokeWidth = 2;
-        pieSeries.slices.template.strokeOpacity = 1;
+// Add data
+@yield('charts2')
 
-        // This creates initial animation
-        pieSeries.hiddenState.properties.opacity = 1;
-        pieSeries.hiddenState.properties.endAngle = -90;
-        pieSeries.hiddenState.properties.startAngle = -90;
+// Create axes
 
-        }); // end am4core.ready()
-    </script>
+var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+categoryAxis.dataFields.category = "country";
+categoryAxis.renderer.grid.template.location = 0;
+categoryAxis.renderer.minGridDistance = 30;
+
+categoryAxis.renderer.labels.template.adapter.add("dy", function(dy, target) {
+  if (target.dataItem && target.dataItem.index & 2 == 2) {
+    return dy + 25;
+  }
+  return dy;
+});
+
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+// Create series
+var series = chart.series.push(new am4charts.ColumnSeries());
+series.dataFields.valueY = "visits";
+series.dataFields.categoryX = "country";
+series.name = "Visits";
+series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
+series.columns.template.fillOpacity = .8;
+
+var columnTemplate = series.columns.template;
+columnTemplate.strokeWidth = 2;
+columnTemplate.strokeOpacity = 1;
+
+}); // end am4core.ready()
+</script>
 @endpush

@@ -133,7 +133,7 @@
                                     @endif
                                 </div>
                             </div>
-                          <div class="form-group col-md-6">
+                          {{--  <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Status Teruskan Surat</label>
                                 <select name="statusTeruskan" class="form-control">
                                     <option disabled>-- pilih Status Teruskan Surat --</option>
@@ -154,7 +154,7 @@
                                 @if ($errors->has('statusBaca'))
                                     <small class="form-text text-danger">{{ $errors->first('statusBaca') }}</small>
                                 @endif
-                            </div>
+                            </div>  --}}
                            
 
 
