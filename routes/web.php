@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\JabatanController;
 use App\Http\Controllers\Tu\StafTuDashboardController;
+use App\Http\Controllers\Tu\StafTuSuratMasukController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -41,4 +42,5 @@ Route::group(['prefix'  => 'admin/'],function(){
 //Route Staf Tata Usaha
 Route::group(['prefix'  => 'staf_tu/'],function(){
     Route::get('/',[StafTuDashboardController::class, 'dashboard'])->name('staf_tu.dashboard');
+    Route::get('/surat_masuk',[StafTuSuratMasukController::class, 'index'])->name('staf_tu.surat_masuk');
 });

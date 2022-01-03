@@ -1,9 +1,9 @@
 <li>
-    <a href=" {{ route('admin.dashboard') }} "><i class="fa fa-home"></i>Dashboard</a>
+    <a href=" {{ route('staf_tu.dashboard') }} "><i class="fa fa-home"></i>Dashboard</a>
 </li>
 
 <li>
-    <a href=" "><i class="fa fa-cog"></i>Manajemen Surat Masuk</a>
+    <a href="{{ route('staf_tu.surat_masuk') }}"><i class="fa fa-cog"></i>Manajemen Surat Masuk</a>
 </li>
 
 <li style="padding-left:2px;">
