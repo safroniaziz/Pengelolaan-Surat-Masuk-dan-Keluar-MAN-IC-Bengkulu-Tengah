@@ -2,16 +2,16 @@
     use App\Models\KlasifikasiBerkas;
 @endphp
 @extends('layouts.layout')
-@section('title', 'Manajemen Surat')
-@section('login_as' ,'Administrator')
+@section('title', 'Manajemen Data Personal')
+@section('login_as', 'Guru')
 @section('user-login')
     @if (Auth::check())
-    {{ Auth::user()->namaUser }}
+    {{ Auth::user()->pegNama }}
     @endif
 @endsection
 @section('user-login2')
     @if (Auth::check())
-    {{ Auth::user()->namaUser }}
+    {{ Auth::user()->pegNama }}
     @endif
 @endsection
 @section('sidebar-menu')
@@ -41,26 +41,55 @@
                             </div>
                     @endif
                 </div>
-                <div class="col-md-12">
-                    <a href="{{ route('admin.surat_masuk.add') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;Tambah Data</a>
-                </div>
-                  
+                {{--  <div class="col-md-12">
+                    <a href="{{ route('admin.jabatan.add') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;Tambah Data</a>
+                </div>  --}}
+                   <div class="row">
+                    <form action="{{ route('admin.jabatan.post') }}" enctype="multipart/form-data" method="POST">
+                        {{ csrf_field() }} {{ method_field('POST') }}
+                        <div class="col-md-12">
+                        
+
+                            <div class="form-group col-sm-12">
+                                <label for="exampleInputEmail1">Nama Jabatan</label>
+                                <input type="text" name="nm_jabatan" class="tags form-control @error('nm_jabatan') is-invalid @enderror" />
+                                <div>
+                                    @if ($errors->has('nm_jabatan'))
+                                        <small class="form-text text-danger">{{ $errors->first('nm_jabatan') }}</small>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-12">
+                                <label for="exampleInputEmail1">Keterangan</label>
+                                <input type="text" name="keterangan" class="tags form-control @error('keterangan') is-invalid @enderror" />
+                                <div>
+                                    @if ($errors->has('keterangan'))
+                                        <small class="form-text text-danger">{{ $errors->first('keterangan') }}</small>
+                                    @endif
+                                </div>
+                            </div>
+
+                            
+
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <hr style="width: 50%" class="mt-0">
+                            <a href="{{ route('admin.jabatan') }}" class="btn btn-warning btn-sm" style="color: white"><i class="fa fa-arrow-left"></i>&nbsp; Kembali</a>
+                            <button type="reset" name="reset" class="btn btn-danger btn-sm"><i class="fa fa-refresh"></i>&nbsp;Ulangi</button>
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check-circle"></i>&nbsp;Simpan Data</button>
+                        </div>
+                    </form>
                 <div class="col-md-12">
                     <table class="table table-striped table-bordered" id="table" style="width:100%;">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Jenis Surat</th>
-                                <th>Nomor Surat</th>
-                                <th>Pengirim Surat</th>
-                                <th>Perihal</th>
-                                <th>Tujuan Surat</th>    
-                                <th>Catatan Surat</th>
-                                <th>Sifat Surat</th>
-                                <th>Tanggal Surat</th>
-                                <th>Status Teruskan Surat</th>
-                                <th>Status Baca Surat</th>
-                                <th>Lampiran Surat</th>
+                                <th>Jabatan</th>
+                                <th>Keterangan</th>
+            
+                           
+                              
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -68,32 +97,25 @@
                             @php
                                 $no=1;
                             @endphp
-                            @foreach ($suratmasuks as $suratmasuk)
+                            @foreach ($jabatans as $jabatan)
                             <tr>
                                 <td>{{ $no++ }}</td>
                             
-                                <td>{{ $suratmasuk->jenisSuratId }}</td>
-                                <td>{{ $suratmasuk->nomorSurat }}</td>
-                                <td>{{ $suratmasuk->pengirimSurat }}</td>
-                                <td>{{ $suratmasuk->perihal }}</td>
-                                <td>{{ $suratmasuk->tujuan }}</td>
-                                <td>{{ $suratmasuk->catatan }}</td>
-                                <td>{{ $suratmasuk->sifatSurat }}</td>
-                                <td>{{ $suratmasuk->tanggalSurat }}</td>
-                                <td>{{ $suratmasuk->statusTeruskan }}</td>
-                                <td>{{ $suratmasuk->statusBaca }}</td>
+                                <td>{{ $jabatan->namaJabatan }}</td>
+                                <td>{{ $jabatan->keterangan }}</td>
+             
+                            
+                             
                                 <td>
-                                    <a class="btn btn-primary btn-sm" href="{{ asset('upload/surat_masuk/'.\Illuminate\Support\Str::slug(Auth::user()->namaUser).'/'.$suratmasuk->lampiran) }}" download="{{ $suratmasuk->lampiran }}"><i class="fa fa-download"></i>&nbsp; Download</a>
-                                </td>
-                                <td>
-                                    <a href="{{ route('admin.surat_masuk.edit',[$suratmasuk->id]) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>&nbsp; Edit</a>
-                                    <form action="{{ route('admin.surat_masuk.delete',[$suratmasuk->id]) }}" method="POST">
+                                    <a href="{{ route('admin.jabatan.edit',[$jabatan->id]) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>&nbsp; Edit</a>
+                                    <form action="{{ route('admin.jabatan.delete',[$jabatan->id]) }}" method="POST">
                                         {{ csrf_field() }} {{ method_field("DELETE") }}
 
                                         <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
                                     </form>
                                 </td>
                             </tr>
+
                         @endforeach
                         </tbody>
                     </table>
@@ -101,8 +123,8 @@
                     <div class="modal fade modal-danger" id="modalhapus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                {{--  <form action="{{ route('admin.surat_masuk.delete',[$suratmasuk->id]) }}"method="POST">
-                                    {{ csrf_field() }} {{ method_field('DELETE') }}  --}}
+                                <form action="{{ route('admin.jabatan.delete',[$jabatan->id]) }}"method="POST">
+                                    {{ csrf_field() }} {{ method_field('DELETE') }}
                                     <div class="modal-header">
                                         <p style="font-size:15px; font-weight:bold;" class="modal-title"><i class="fa fa-trash"></i>&nbsp;Form Konfirmasi Hapus Data</p>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">

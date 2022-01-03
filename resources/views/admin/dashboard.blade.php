@@ -3,12 +3,12 @@
 @section('login_as', 'Administrator')
 @section('user-login')
     @if (Auth::check())
-    {{ Auth::user()->nm_user }}
+    {{ Auth::user()->namaUser }}
     @endif
 @endsection
 @section('user-login2')
     @if (Auth::check())
-    {{ Auth::user()->nm_user }}
+    {{ Auth::user()->namaUser }}
     @endif
 @endsection
 @section('sidebar-menu')

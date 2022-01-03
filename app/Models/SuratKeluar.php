@@ -9,4 +9,14 @@ class SuratKeluar extends Model
 {
     use HasFactory;
     protected $table = 'tb_surat_keluar';
+    protected $fillable = [
+        'jenisSuratId',
+        'nomorSurat',
+        'penerima',
+        'perihal',
+        'tujuan',
+        'lampiran',
+        'catatan',
+        'sifatSurat',
+    ];
 }

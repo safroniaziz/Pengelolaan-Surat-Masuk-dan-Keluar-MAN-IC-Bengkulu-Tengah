@@ -3,19 +3,25 @@
 </li>
 
 <li>
-    <a href="{{ route('admin.jabatan') }}"><i class="fa fa-cog"></i>Manajemen Jabatan</a>
+    <a href="{{ route('admin.jabatan') }}"><i class="fa fa-user"></i>Manajemen Jabatan</a>
 </li>
-
 <li>
-    <a href=" "><i class="fa fa-cog"></i>Manajemen Surat Masuk</a>
+    <a href=" {{ route('admin.jenis_surat') }}"><i class="fa fa-book"></i>Manajemen Jenis Surat</a>
 </li>
-
-<li><a><i class="fa fa-list-alt"></i>Klasifikasi Surat <span class="fa fa-chevron-down"></span></a>
+<li><a><i class="fa fa-envelope"></i>Klasifikasi Surat <span class="fa fa-chevron-down"></span></a>
     <ul class="nav child_menu">
-        <li><a href="">Surat Masuk</a></li>
-        <li><a href="">Surat Keluar</a></li>
+        <li><a href=" {{ route('admin.surat_masuk') }}">Surat Masuk</a></li>
+        <li><a href=" {{ route('admin.surat_keluar') }}">Surat Keluar</a></li>
     </ul>
 </li>
+<li>
+    <a href=" {{ route('admin.disposisi_surat') }}"><i class="fa fa-comments"></i>Manajemen Disposisi Surat</a>
+</li>
+<li>
+    <a href=" {{ route('admin.user') }}"><i class="fa fa-users"></i>Manajemen User</a>
+</li>
+
+
 
 <li style="padding-left:2px;">
     <a class="dropdown-item" href="{{ route('logout') }}"
