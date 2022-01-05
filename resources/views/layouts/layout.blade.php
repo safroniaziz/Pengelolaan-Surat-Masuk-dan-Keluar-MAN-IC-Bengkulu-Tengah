@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
-    <title>Simas MAN IC | @yield('title') </title>
+    <title>SPKT MAN IC | @yield('title') </title>
     <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}">
 
     <!-- Bootstrap -->

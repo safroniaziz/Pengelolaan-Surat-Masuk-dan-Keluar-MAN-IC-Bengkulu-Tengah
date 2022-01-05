@@ -18,5 +18,6 @@ class SuratKeluar extends Model
         'lampiran',
         'catatan',
         'sifatSurat',
+        'tanggalSurat'
     ];
 }

@@ -24,8 +24,8 @@ class CreateTbSuratMasukTable extends Migration
             $table->string('catatan')->nullable();
             $table->enum('sifatSurat',['penting','segera','rahasia','biasa']);
             $table->date('tanggalSurat');
-            $table->enum('statusTeruskan',['sudah','belum']);
-            $table->enum('statusBaca',['sudah','belum']);
+            $table->enum('statusTeruskan',['sudah','belum'])->default('belum');
+            $table->enum('statusBaca',['sudah','belum'])->default('belum');
             $table->timestamps();
         });
     }

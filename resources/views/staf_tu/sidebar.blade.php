@@ -3,7 +3,11 @@
 </li>
 
 <li>
-    <a href="{{ route('staf_tu.surat_masuk') }}"><i class="fa fa-cog"></i>Manajemen Surat Masuk</a>
+    <a href="{{ route('staf_tu.surat_masuk') }}"><i class="fa fa-envelope-square"></i>Manajemen Surat Masuk</a>
+</li>
+
+<li>
+    <a href="{{ route('staf_tu.surat_keluar') }}"><i class="fa fa-envelope"></i>Manajemen Surat Keluar</a>
 </li>
 
 <li style="padding-left:2px;">

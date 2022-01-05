@@ -1,8 +1,5 @@
-@php
-    use App\Models\KlasifikasiBerkas;
-@endphp
 @extends('layouts.layout')
-@section('title', 'Manajemen Klasifikasi Berkas')
+@section('title', 'Manajemen Surat Masuk')
 @section('login_as', 'Staf Tata Usaha')
 @section('user-login')
     @if (Auth::check())
@@ -43,7 +40,7 @@
                 </div>
 
                 <div class="col-md-12">
-                    <a href="" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp; Tambah Surat Masuk</a>
+                    <a href="{{ route('staf_tu.surat_masuk.add') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp; Tambah Surat Masuk</a>
                     <table class="table table-striped table-bordered" id="table" style="width:100%;">
                         <thead>
                             <tr>
@@ -52,6 +49,7 @@
                                 <th>Nomor Surat</th>
                                 <th>Perihal</th>
                                 <th>Lampiran</th>
+                                <th>Status Teruskan</th>
                                 <th>Status Baca</th>
                                 <th>Aksi</th>
                             </tr>
@@ -74,22 +72,58 @@
                                     <td> {{ $surat->nomorSurat }} </td>
                                     <td> {{ $surat->perihal }} </td>
                                     <td>
-                                        <a href="" class="btn btn-primary btn-sm"><i class="fa fa-download"></i>&nbsp; Download</a>
+                                        <a class="btn btn-primary btn-sm" href="{{ asset('upload/surat_masuk/'.\Illuminate\Support\Str::slug(Auth::user()->namaUser).'/'.$surat->lampiran) }}" download="{{ $surat->lampiran }}"><i class="fa fa-download"></i>&nbsp; Download</a>
+                                        {{-- <a href="" class="btn btn-primary btn-sm"><i class="fa fa-download"></i>&nbsp; Download</a> --}}
                                     </td>
                                     <td>
-                                        @if ($surat->statusBaca == "sudah")
+                                        @if ($surat->statusTeruskan == "sudah")
                                             <label class="badge badge-success"><i class="fa fa-check-circle"></i>&nbsp; Sudah Diteruskan</label>
+                                            <hr style="padding: 0px;">
+                                            <button class="btn btn-primary btn-sm" disabled><i class="fa fa-arrow-right"></i>&nbsp; Teruskan</button>
                                             @else
                                             <label class="badge badge-danger"><i class="fa fa-minus-circle"></i>&nbsp; Belum Diteruskan</label>
+                                            <hr style="padding: 0px;">
+                                            <a onclick="teruskan({{ $surat->id }})" class="btn btn-primary btn-sm" style="color: white; cursor: pointer;"><i class="fa fa-arrow-right"></i>&nbsp; Teruskan</a>
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="" class="btn btn-info btn-sm"><i class="fa fa-info-circle"></i>&nbsp; Detail</a>
+                                        @if ($surat->statusBaca == "sudah")
+                                            <label class="badge badge-success"><i class="fa fa-check-circle"></i>&nbsp; Sudah Dibaca</label>
+                                            @else
+                                            <label class="badge badge-danger"><i class="fa fa-minus-circle"></i>&nbsp; Belum Dibaca</label>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('staf_tu.surat_masuk.detail',[$surat->id]) }}" style="color: white; cursor: pointer;" class="btn btn-info btn-sm"><i class="fa fa-info-circle"></i>&nbsp; Detail</a>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    <!-- Modal Konfirmasi Teruskan-->
+                    <div class="modal fade" id="modalKonfirmasiTeruskan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form action="{{ route('staf_tu.surat_masuk.teruskan') }}" method="POST">
+                                {{ csrf_field() }} {{ method_field("PATCH") }}
+                                <div class="modal-header">
+                                <p class="modal-title" id="exampleModalLabel">Konfirmasi Teruskan Surat</p>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                   Apakah Anda Yakin Akan Meneruskan Surat Ke Kepala Sekolah?
+                                    <input type="hidden" name="teruskanId" id="teruskanId">
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;Batalkan</button>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-check-circle"></i>&nbsp;Ya, Teruskan</button>
+                                </div>
+                            </form>
+                        </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -102,5 +136,10 @@
                 responsive : true,
             });
         } );
+
+        function teruskan(id){
+            $('#modalKonfirmasiTeruskan').modal('show');
+            $('#teruskanId').val(id);
+        }
     </script>
 @endpush

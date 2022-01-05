@@ -38,7 +38,6 @@ class JabatanController extends Controller
         $attributes = [
             'nm_jabatan'   =>  'Nama Jabatan',
             'keterangan'   =>  'keterangan',
-      
         ];
         $this->validate($request, [
             'nm_jabatan'    =>  'required',

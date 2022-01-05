@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\DisposisiSuratController;
 use App\Http\Controllers\Admin\UserController;
 
 use App\Http\Controllers\Tu\StafTuDashboardController;
+use App\Http\Controllers\Tu\StafTuSuratKeluarController;
 use App\Http\Controllers\Tu\StafTuSuratMasukController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -98,5 +99,20 @@ Route::group(['prefix'  => 'admin/'],function(){
 //Route Staf Tata Usaha
 Route::group(['prefix'  => 'staf_tu/'],function(){
     Route::get('/',[StafTuDashboardController::class, 'dashboard'])->name('staf_tu.dashboard');
-    Route::get('/surat_masuk',[StafTuSuratMasukController::class, 'index'])->name('staf_tu.surat_masuk');
+
+    Route::group(['prefix'  => 'surat_masuk'],function(){
+        Route::get('/',[StafTuSuratMasukController::class, 'index'])->name('staf_tu.surat_masuk');
+        Route::get('/add',[StafTuSuratMasukController::class, 'add'])->name('staf_tu.surat_masuk.add');
+        Route::post('/',[StafTuSuratMasukController::class, 'post'])->name('staf_tu.surat_masuk.post');
+        Route::patch('/',[StafTuSuratMasukController::class, 'teruskan'])->name('staf_tu.surat_masuk.teruskan');
+        Route::get('/{id}/detail',[StafTuSuratMasukController::class, 'detail'])->name('staf_tu.surat_masuk.detail');
+    });
+
+    Route::group(['prefix'  => 'surat_keluar'],function(){
+        Route::get('/',[StafTuSuratKeluarController::class, 'index'])->name('staf_tu.surat_keluar');
+        Route::get('/add',[StafTuSuratKeluarController::class, 'add'])->name('staf_tu.surat_keluar.add');
+        Route::post('/',[StafTuSuratKeluarController::class, 'post'])->name('staf_tu.surat_keluar.post');
+        Route::patch('/',[StafTuSuratKeluarController::class, 'teruskan'])->name('staf_tu.surat_keluar.teruskan');
+        Route::get('/{id}/detail',[StafTuSuratKeluarController::class, 'detail'])->name('staf_tu.surat_keluar.detail');
+    });
 });

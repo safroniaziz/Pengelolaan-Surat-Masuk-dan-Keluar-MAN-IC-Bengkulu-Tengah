@@ -4,27 +4,27 @@ namespace App\Http\Controllers\Tu;
 
 use App\Http\Controllers\Controller;
 use App\Models\JenisSurat;
-use App\Models\SuratMasuk;
+use App\Models\SuratKeluar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-class StafTuSuratMasukController extends Controller
+class StafTuSuratKeluarController extends Controller
 {
     public function index(){
-        $surat_masuks = SuratMasuk::join('tb_jenis_surat','tb_jenis_surat.id','tb_surat_masuk.jenisSuratId')
-                        ->select('tb_surat_masuk.id','jenisSurat','pengirimSurat','nomorSurat','perihal',
-                                'tujuan','lampiran','catatan','sifatSurat','tanggalSurat','statusTeruskan',
-                                'statusBaca','tb_surat_masuk.created_at')
+        $surat_keluars = SuratKeluar::join('tb_jenis_surat','tb_jenis_surat.id','tb_surat_keluar.jenisSuratId')
+                        ->select('tb_surat_keluar.id','jenisSurat','penerima','nomorSurat','perihal',
+                                'tujuan','lampiran','catatan','sifatSurat','tanggalSurat',
+                                'tb_surat_keluar.created_at')
                         ->orderBy('created_at','desc')
                         ->get();
-        // return $surat_masuks;
-        return view('staf_tu/surat_masuk.index',compact('surat_masuks'));
+        // return $surat_keluars;
+        return view('staf_tu/surat_keluar.index',compact('surat_keluars'));
     }
 
     public function add(){
         $jenissurat = JenisSurat::select('id','jenisSurat')->get();
-        return view('staf_tu/surat_masuk.add',compact('jenissurat'));
+        return view('staf_tu/surat_keluar.add',compact('jenissurat'));
     }
 
     public function post(Request $request){
@@ -38,7 +38,7 @@ class StafTuSuratMasukController extends Controller
         ];
         $attributes = [
             'jenisSuratId'   =>  'Jenis Surat',
-            'pengirimSurat'   =>  'Pengirim Surat',
+            'penerima'   =>  'Pengirim Surat',
             'nomorSurat'   =>  'Nomor Surat',
             'perihal'   =>  'Perihal',
             'tujuan'   =>  'Tujuan',
@@ -49,7 +49,7 @@ class StafTuSuratMasukController extends Controller
         ];
         $this->validate($request, [
             'jenisSuratId'  =>  'required',
-            'pengirimSurat'  =>  'required',
+            'penerima'  =>  'required',
             'nomorSurat'  =>  'required',
             'perihal'  =>  'required',
             'tujuan'  =>  'required',
@@ -66,12 +66,12 @@ class StafTuSuratMasukController extends Controller
         if ($request->hasFile('lampiran')) {
             $model['lampiran'] = $slug_user.'-'.$slug_user.'-'.date('now').'.'.$request->lampiran->getClientOriginalExtension();
             $request->lampiran
-            ->move(public_path('/upload/surat_masuk/'.$slug_user), $model['lampiran']);
+            ->move(public_path('/upload/surat_keluar/'.$slug_user), $model['lampiran']);
         }
-        SuratMasuk::create([
+        SuratKeluar::create([
             'jenisSuratId'=>  $request->jenisSuratId,
             'nomorSurat'    =>  $request->nomorSurat,
-            'pengirimSurat'=>  $request->pengirimSurat,
+            'penerima'=>  $request->penerima,
             'perihal'    =>  $request->perihal,
             'tujuan'=>  $request->tujuan,
             'lampiran'    =>  $model['lampiran'],
@@ -81,29 +81,18 @@ class StafTuSuratMasukController extends Controller
         ]);
 
         $notification = array(
-            'message' => 'Berhasil, data surat masuk berhasil ditambahkan!',
+            'message' => 'Berhasil, data surat keluar berhasil ditambahkan!',
             'alert-type' => 'success'
         );
-        return redirect()->route('staf_tu.surat_masuk')->with($notification);
+        return redirect()->route('staf_tu.surat_keluar')->with($notification);
     }
 
-    public function detail($id){
-        $detail = SuratMasuk::join('tb_jenis_surat','tb_jenis_surat.id','tb_surat_masuk.jenisSuratId')
-                            ->select('tb_surat_masuk.id','jenisSurat','pengirimSurat','nomorSurat','perihal','tujuan','lampiran',
-                                        'catatan','sifatSurat','tanggalSurat','statusTeruskan','statusBaca')
-                            ->where('tb_surat_masuk.id',$id)
+    public function detail($detailId){
+        $detail = SuratKeluar::join('tb_jenis_surat','tb_jenis_surat.id','tb_surat_keluar.jenisSuratId')
+                            ->select('tb_surat_keluar.id','jenisSurat','penerima','nomorSurat','perihal','tujuan','lampiran',
+                                        'catatan','sifatSurat','tanggalSurat')
+                            ->where('tb_surat_keluar.id',$detailId)
                             ->first();
-        return view('staf_tu/surat_masuk.detail',compact('detail'));
-    }
-
-    public function teruskan(Request $request){
-        SuratMasuk::where('id',$request->teruskanId)->update([
-            'statusTeruskan'    =>  'sudah',
-        ]);
-        $notification = array(
-            'message' => 'Berhasil, data surat masuk berhasil diteruskan!',
-            'alert-type' => 'success'
-        );
-        return redirect()->route('staf_tu.surat_masuk')->with($notification);
+        return $detail;
     }
 }
