@@ -67,8 +67,8 @@ class SuratMasukController extends Controller
             'catatan'=>  $request->catatan,
             'sifatSurat'=>  $request->sifatSurat,
             'tanggalSurat'=>  $request->tanggalSurat,
-            'statusTeruskan'=>  $request->statusTeruskan,
-            'statusBaca'=>  $request->statusBaca,
+            // 'statusTeruskan'=>  $request->statusTeruskan,
+            // 'statusBaca'=>  $request->statusBaca,
         ]);
 
         $notification = array(
@@ -117,8 +117,8 @@ class SuratMasukController extends Controller
             'catatan'=>  $request->catatan,
             'sifatSurat'=>  $request->sifatSurat,
             'tanggalSurat'=>  $request->tanggalSurat,
-            'statusTeruskan'=>  $request->statusTeruskan,
-            'statusBaca'=>  $request->statusBaca,
+            // 'statusTeruskan'=>  $request->statusTeruskan,
+            // 'statusBaca'=>  $request->statusBaca,
             'lampiran'    =>  $model['lampiran'],
 
             ]);

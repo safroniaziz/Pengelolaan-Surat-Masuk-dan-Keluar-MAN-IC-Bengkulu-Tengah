@@ -14,9 +14,9 @@
         <li><a href=" {{ route('admin.surat_keluar') }}">Surat Keluar</a></li>
     </ul>
 </li>
-<li>
+{{--  <li>
     <a href=" {{ route('admin.disposisi_surat') }}"><i class="fa fa-comments"></i>Manajemen Disposisi Surat</a>
-</li>
+</li>  --}}
 <li>
     <a href=" {{ route('admin.user') }}"><i class="fa fa-users"></i>Manajemen User</a>
 </li>

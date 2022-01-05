@@ -36,9 +36,9 @@
                                 <strong>Gagal :</strong>{{ $message }}
                             </div>
                             @else
-                            <div class="alert alert-success alert-block" id="keterangan">
+                            {{--  <div class="alert alert-success alert-block" id="keterangan">
                                 <strong><i class="fa fa-info-circle"></i>&nbsp;Perhatian: </strong> Berikut semua berkas berkas yang sudah diupload oleh operator !!
-                            </div>
+                            </div>  --}}
                     @endif
                 </div>
                 <div class="col-md-12">
