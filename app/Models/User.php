@@ -29,6 +29,15 @@ class User extends Authenticatable
         'status',
     ];
 
+    // public function jabatan()
+    // {
+    // 	return $this->hasOne('App\Models\Jabatan');
+    // }
+    public function jabatan()
+{
+    return $this->belongsTo('App\Models\Jabatan', 'jabatanId');
+}
+
     /**
      * The attributes that should be hidden for serialization.
      *

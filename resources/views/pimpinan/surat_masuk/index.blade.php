@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('title', 'Manajemen Surat Masuk')
-@section('login_as', 'Staf Tata Usaha')
+@section('login_as', 'Pimpinan')
 @section('user-login')
     @if (Auth::check())
     {{ Auth::user()->namaUser }}
@@ -12,7 +12,7 @@
     @endif
 @endsection
 @section('sidebar-menu')
-    @include('staf_tu/sidebar')
+    @include('pimpinan/sidebar')
 @endsection
 @section('content')
     <section class="panel" style="margin-bottom:20px;">
@@ -34,7 +34,7 @@
                             </div>
                             @else
                             <div class="alert alert-primary alert-block" id="keterangan">
-                                <strong><i class="fa fa-info-circle"></i>&nbsp;Perhatian: </strong> Semua surat masuk terurut berdasarkan waktu upload, silahkan klik tombol detail untuk informasi lengkap mengenai surat masuk !!
+                                <strong><i class="fa fa-info-circle"></i>&nbsp;Perhatian: </strong> Semua surat masuk terurut berdasarkan waktu upload, surat masuk yang muncul hanya surat masuk yang sudah diteruskan ke pimpinan saja, silahkan lakukan disposisi surat masuk jika diperlukan
                             </div>
                     @endif
                 </div>
@@ -49,7 +49,7 @@
                                 <th>Nomor Surat</th>
                                 <th>Perihal</th>
                                 <th>Lampiran</th>
-                                <th>Status Teruskan</th>
+                                <th>Status Disposisi</th>
                                 <th>Status Baca</th>
                                 <th>Aksi</th>
                             </tr>
@@ -77,11 +77,11 @@
                                     </td>
                                     <td>
                                         @if ($surat->statusTeruskan == "sudah")
-                                            <label class="badge badge-success"><i class="fa fa-check-circle"></i>&nbsp; Sudah Diteruskan</label>
+                                            <label class="badge badge-success"><i class="fa fa-check-circle"></i>&nbsp; Sudah Didisposisikan</label>
                                             <hr style="padding: 0px;">
-                                            <button class="btn btn-primary btn-sm" disabled><i class="fa fa-arrow-right"></i>&nbsp; Teruskan</button>
+                                            <button class="btn btn-primary btn-sm" disabled><i class="fa fa-arrow-right"></i>&nbsp; Disposisikan Surat</button>
                                             @else
-                                            <label class="badge badge-danger"><i class="fa fa-minus-circle"></i>&nbsp; Belum Diteruskan</label>
+                                            <label class="badge badge-danger"><i class="fa fa-minus-circle"></i>&nbsp; Belum Didisposisikan</label>
                                             <hr style="padding: 0px;">
                                             <a onclick="teruskan({{ $surat->id }})" class="btn btn-primary btn-sm" style="color: white; cursor: pointer;"><i class="fa fa-arrow-right"></i>&nbsp; Teruskan</a>
                                         @endif

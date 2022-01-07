@@ -67,12 +67,12 @@ class LoginController extends Controller
                         'alert-type' => 'success'
                     );
                     return redirect()->route('staf_tu.dashboard')->with($notification2);;
-                }elseif (auth()->user()->hakAkses == "Pimpinan") {
+                }elseif (auth()->user()->hakAkses == "pimpinan") {
                     $notification2 = array(
                         'message' => 'Berhasil, akun login sebagai pimpinan!',
                         'alert-type' => 'success'
                     );
-                    return redirect()->route('Pimpinan.dashboard')->with($notification2);;
+                    return redirect()->route('pimpinan.dashboard')->with($notification2);;
                 }else {
                     Auth::logout();
                     $notification = array(

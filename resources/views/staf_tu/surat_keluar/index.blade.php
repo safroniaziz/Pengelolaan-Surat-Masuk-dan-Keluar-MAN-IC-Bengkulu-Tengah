@@ -17,7 +17,7 @@
 @section('content')
     <section class="panel" style="margin-bottom:20px;">
         <header class="panel-heading" style="color: #ffffff;background-color: #074071;border-color: #fff000;border-image: none;border-style: solid solid none;border-width: 4px 0px 0;border-radius: 0;font-size: 14px;font-weight: 700;padding: 15px;">
-            <i class="fa fa-home"></i>&nbsp;Arsip Dokumen Universitas Bengkulu
+            <i class="fa fa-home"></i>&nbsp;Sistem Informasi Manajemen Surat MAN Insan Cendikia Bengkulu Tengah
         </header>
         <div class="panel-body" style="border-top: 1px solid #eee; padding:15px; background:white;">
             <div class="row" style="margin-right:-15px; margin-left:-15px;">
@@ -86,61 +86,70 @@
                         <div class="modal-content">
                             
                             <div class="modal-header">
-                            <p class="modal-title" id="exampleModalLabel"><i class="fa fa-info-circle"></i>Informasi Detail Surat Keluar Untuk <b><u><a id="judulDetail"></u></b></a></p>
+                            <p class="modal-title" id="exampleModalLabel"><i class="fa fa-info-circle"></i>&nbsp;Informasi Detail Surat Keluar Untuk <b><u><a id="judulDetail"></u></b></a></p>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                             </div>
                             <div class="modal-body">
-                                <table class="table table-hover">
-                                    <tbody>
-                                        <tr>
-                                            <th>Jenis Surat</th>
-                                            <td>:</td>
-                                            <td id="jenisSurat"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Penerima Surat</th>
-                                            <td>:</td>
-                                            <td id="penerima"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Nomor Surat</th>
-                                            <td>:</td>
-                                            <td id="nomorSurat"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Perihal</th>
-                                            <td>:</td>
-                                            <td id="perihal"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Tujuan</th>
-                                            <td>:</td>
-                                            <td id="tujuan"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Lampiran</th>
-                                            <td>:</td>
-                                            <td id="lampiran"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Catatan</th>
-                                            <td>:</td>
-                                            <td id="catatan"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Sifat Surat</th>
-                                            <td>:</td>
-                                            <td id="sifatSurat"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>tanggalSurat</th>
-                                            <td>:</td>
-                                            <td id="tanggalSurat"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="alert alert-primary">
+                                            Informasi detail surat keluar
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <table class="table table-hover">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Jenis Surat</th>
+                                                    <td>:</td>
+                                                    <td id="jenisSurat"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Penerima Surat</th>
+                                                    <td>:</td>
+                                                    <td id="penerima"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Nomor Surat</th>
+                                                    <td>:</td>
+                                                    <td id="nomorSurat"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Perihal</th>
+                                                    <td>:</td>
+                                                    <td id="perihal"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Tujuan</th>
+                                                    <td>:</td>
+                                                    <td id="tujuan"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Lampiran</th>
+                                                    <td>:</td>
+                                                    <td id="lampiran"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Catatan</th>
+                                                    <td>:</td>
+                                                    <td id="catatan"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Sifat Surat</th>
+                                                    <td>:</td>
+                                                    <td id="sifatSurat"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>tanggalSurat</th>
+                                                    <td>:</td>
+                                                    <td id="tanggalSurat"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;Batalkan</button>

@@ -8,7 +8,9 @@ use App\Http\Controllers\Admin\JenisSuratController;
 use App\Http\Controllers\Admin\DisposisiSuratController;
 
 use App\Http\Controllers\Admin\UserController;
-
+use App\Http\Controllers\Pimpinan\PimpinanDashboardController;
+use App\Http\Controllers\Pimpinan\PimpinanSuratKeluarController;
+use App\Http\Controllers\Pimpinan\PimpinanSuratMasukController;
 use App\Http\Controllers\Tu\StafTuDashboardController;
 use App\Http\Controllers\Tu\StafTuSuratKeluarController;
 use App\Http\Controllers\Tu\StafTuSuratMasukController;
@@ -114,5 +116,26 @@ Route::group(['prefix'  => 'staf_tu/'],function(){
         Route::post('/',[StafTuSuratKeluarController::class, 'post'])->name('staf_tu.surat_keluar.post');
         Route::patch('/',[StafTuSuratKeluarController::class, 'teruskan'])->name('staf_tu.surat_keluar.teruskan');
         Route::get('/{id}/detail',[StafTuSuratKeluarController::class, 'detail'])->name('staf_tu.surat_keluar.detail');
+    });
+});
+
+//Route Staf Tata Usaha
+Route::group(['prefix'  => 'pimpinan/'],function(){
+    Route::get('/',[PimpinanDashboardController::class, 'dashboard'])->name('pimpinan.dashboard');
+
+    Route::group(['prefix'  => 'surat_masuk'],function(){
+        Route::get('/',[PimpinanSuratMasukController::class, 'index'])->name('pimpinan.surat_masuk');
+        Route::get('/add',[PimpinanSuratMasukController::class, 'add'])->name('pimpinan.surat_masuk.add');
+        Route::post('/',[PimpinanSuratMasukController::class, 'post'])->name('pimpinan.surat_masuk.post');
+        Route::patch('/',[PimpinanSuratMasukController::class, 'teruskan'])->name('pimpinan.surat_masuk.teruskan');
+        Route::get('/{id}/detail',[PimpinanSuratMasukController::class, 'detail'])->name('pimpinan.surat_masuk.detail');
+    });
+
+    Route::group(['prefix'  => 'surat_keluar'],function(){
+        Route::get('/',[PimpinanSuratKeluarController::class, 'index'])->name('pimpinan.surat_keluar');
+        Route::get('/add',[PimpinanSuratKeluarController::class, 'add'])->name('pimpinan.surat_keluar.add');
+        Route::post('/',[PimpinanSuratKeluarController::class, 'post'])->name('pimpinan.surat_keluar.post');
+        Route::patch('/',[PimpinanSuratKeluarController::class, 'teruskan'])->name('pimpinan.surat_keluar.teruskan');
+        Route::get('/{id}/detail',[PimpinanSuratKeluarController::class, 'detail'])->name('pimpinan.surat_keluar.detail');
     });
 });
