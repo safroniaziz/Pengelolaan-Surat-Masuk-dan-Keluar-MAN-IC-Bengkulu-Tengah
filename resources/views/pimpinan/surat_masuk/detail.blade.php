@@ -1,6 +1,8 @@
 @extends('layouts.layout')
 @section('title', 'Manajemen Surat Masuk')
-@section('login_as', 'Staf Tata Usaha')
+@section('login_as')
+    {{ Auth::user()->jabatan->namaJabatan }}
+@endsection
 @section('user-login')
     @if (Auth::check())
     {{ Auth::user()->namaUser }}

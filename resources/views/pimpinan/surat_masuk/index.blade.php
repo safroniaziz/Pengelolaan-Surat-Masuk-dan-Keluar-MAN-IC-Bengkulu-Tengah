@@ -1,6 +1,11 @@
+@php
+    use App\Models\DisposisiSurat;
+@endphp
 @extends('layouts.layout')
 @section('title', 'Manajemen Surat Masuk')
-@section('login_as', 'Pimpinan')
+@section('login_as')
+    {{ Auth::user()->jabatan->namaJabatan }}
+@endsection
 @section('user-login')
     @if (Auth::check())
     {{ Auth::user()->namaUser }}
@@ -40,7 +45,7 @@
                 </div>
 
                 <div class="col-md-12">
-                    <a href="{{ route('staf_tu.surat_masuk.add') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp; Tambah Surat Masuk</a>
+                    <a href="{{ route('pimpinan.surat_masuk.add') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp; Tambah Surat Masuk</a>
                     <table class="table table-striped table-bordered" id="table" style="width:100%;">
                         <thead>
                             <tr>
@@ -76,14 +81,17 @@
                                         {{-- <a href="" class="btn btn-primary btn-sm"><i class="fa fa-download"></i>&nbsp; Download</a> --}}
                                     </td>
                                     <td>
-                                        @if ($surat->statusTeruskan == "sudah")
+                                        @php
+                                            $disposisi = count(DisposisiSurat::where('suratMasukId',$surat->id)->where('pengirimId',Auth::user()->id)->get());
+                                        @endphp
+                                        @if ($disposisi > 0)
                                             <label class="badge badge-success"><i class="fa fa-check-circle"></i>&nbsp; Sudah Didisposisikan</label>
                                             <hr style="padding: 0px;">
                                             <button class="btn btn-primary btn-sm" disabled><i class="fa fa-arrow-right"></i>&nbsp; Disposisikan Surat</button>
                                             @else
                                             <label class="badge badge-danger"><i class="fa fa-minus-circle"></i>&nbsp; Belum Didisposisikan</label>
                                             <hr style="padding: 0px;">
-                                            <a onclick="teruskan({{ $surat->id }})" class="btn btn-primary btn-sm" style="color: white; cursor: pointer;"><i class="fa fa-arrow-right"></i>&nbsp; Teruskan</a>
+                                            <a onclick="disposisikan({{ $surat->id }})" class="btn btn-primary btn-sm" style="color: white; cursor: pointer;"><i class="fa fa-arrow-right"></i>&nbsp; Disposisikan Surat</a>
                                         @endif
                                     </td>
                                     <td>
@@ -94,27 +102,45 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('staf_tu.surat_masuk.detail',[$surat->id]) }}" style="color: white; cursor: pointer;" class="btn btn-info btn-sm"><i class="fa fa-info-circle"></i>&nbsp; Detail</a>
+                                        <a href="{{ route('pimpinan.surat_masuk.detail',[$surat->id]) }}" style="color: white; cursor: pointer;" class="btn btn-info btn-sm"><i class="fa fa-info-circle"></i>&nbsp; Detail</a>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                     <!-- Modal Konfirmasi Teruskan-->
-                    <div class="modal fade" id="modalKonfirmasiTeruskan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="modalKonfirmasiDisposisi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <form action="{{ route('staf_tu.surat_masuk.teruskan') }}" method="POST">
+                            <form action="{{ route('pimpinan.surat_masuk.disposisikan') }}" method="POST">
                                 {{ csrf_field() }} {{ method_field("PATCH") }}
                                 <div class="modal-header">
-                                <p class="modal-title" id="exampleModalLabel">Konfirmasi Teruskan Surat</p>
+                                <p class="modal-title" id="exampleModalLabel">Konfirmasi Disposisi Surat</p>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                                 </div>
                                 <div class="modal-body">
-                                   Apakah Anda Yakin Akan Meneruskan Surat Ke Kepala Sekolah?
-                                    <input type="hidden" name="teruskanId" id="teruskanId">
+                                   <div class="row">
+                                       <div class="col-md-12">
+                                            <p>
+                                                Apakah Anda Yakin Akan Mendisposisikan Surat Masuk?
+                                                Jika iya, silahkan pilih pimpinan yang akan menerima disposisi surat !
+                                            </p>
+                                       </div>
+                                       <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="">Pilih Pimpinan Yang Akan Menerima Disposisi</label>
+                                                <select name="penerimaId" class="form-control" id="">
+                                                    <option disabled selected>-- pilih pimpinan --</option>
+                                                    @foreach ($pimpinans as $pimpinan)
+                                                        <option value="{{ $pimpinan->id }}">{{ $pimpinan->namaUser }} - {{ $pimpinan->namaJabatan }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                       </div>
+                                   </div>
+                                    
                                 </div>
                                 <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;Batalkan</button>
@@ -137,9 +163,9 @@
             });
         } );
 
-        function teruskan(id){
-            $('#modalKonfirmasiTeruskan').modal('show');
-            $('#teruskanId').val(id);
+        function disposisikan(id){
+            $('#modalKonfirmasiDisposisi').modal('show');
+            $('#disposisiId').val(id);
         }
     </script>
 @endpush

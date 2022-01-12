@@ -129,6 +129,7 @@ Route::group(['prefix'  => 'pimpinan/'],function(){
         Route::post('/',[PimpinanSuratMasukController::class, 'post'])->name('pimpinan.surat_masuk.post');
         Route::patch('/',[PimpinanSuratMasukController::class, 'teruskan'])->name('pimpinan.surat_masuk.teruskan');
         Route::get('/{id}/detail',[PimpinanSuratMasukController::class, 'detail'])->name('pimpinan.surat_masuk.detail');
+        Route::POST('/disposisikan',[PimpinanSuratMasukController::class, 'disposisikan'])->name('pimpinan.surat_masuk.disposisikan');
     });
 
     Route::group(['prefix'  => 'surat_keluar'],function(){

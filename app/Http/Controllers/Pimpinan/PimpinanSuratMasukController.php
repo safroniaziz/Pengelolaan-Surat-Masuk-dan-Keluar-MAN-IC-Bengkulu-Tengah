@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class PimpinanSuratMasukController extends Controller
 {
@@ -19,7 +20,9 @@ class PimpinanSuratMasukController extends Controller
                         ->orderBy('created_at','desc')
                         ->get();
         }
-                        // return $surat_masuks;
-        return view('pimpinan/surat_masuk.index',compact('surat_masuks'));
+        $pimpinans = User::join('tb_jabatan','tb_jabatan.id','tb_user.jabatanId')
+                            ->select('tb_user.id','namaUser','namaJabatan')
+                            ->where('hakAkses','pimpinan')->get();
+        return view('pimpinan/surat_masuk.index',compact('surat_masuks','pimpinans'));
     }
 }

@@ -1,6 +1,8 @@
 @extends('layouts.layout')
 @section('title', 'Dashboard')
-@section('login_as', 'Pimpinan')
+@section('login_as')
+    {{ Auth::user()->jabatan->namaJabatan }}
+@endsection
 @section('user-login')
     @if (Auth::check())
     {{ Auth::user()->namaUser }}
