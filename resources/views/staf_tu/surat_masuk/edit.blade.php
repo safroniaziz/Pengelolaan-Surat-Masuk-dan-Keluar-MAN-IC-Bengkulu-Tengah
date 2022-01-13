@@ -1,18 +1,18 @@
 @extends('layouts.layout')
-@section('title', 'Manajemen Klasifikasi Berkas')
-@section('login_as', 'Guru')
+@section('title', 'Manajemen Surat Masuk')
+@section('login_as', 'Staf Tata Usaha')
 @section('user-login')
     @if (Auth::check())
-    {{ Auth::user()->pegNama }}
+    {{ Auth::user()->namaUser }}
     @endif
 @endsection
 @section('user-login2')
     @if (Auth::check())
-    {{ Auth::user()->pegNama }}
+    {{ Auth::user()->namaUser }}
     @endif
 @endsection
 @section('sidebar-menu')
-    @include('admin/sidebar')
+    @include('staf_tu/sidebar')
 @endsection
 @push('styles')
     <style>
@@ -40,12 +40,11 @@
                     </div>
                 </div>
                 <div class="row">
-                    <form action="{{ route('admin.surat_keluar.update',[$data->id]) }}" enctype="multipart/form-data" method="POST">
+                    <form action="{{ route('staf_tu.surat_masuk.update',[$data->id]) }}" enctype="multipart/form-data" method="POST">
                         {{ csrf_field() }} {{ method_field('PATCH') }}
                         <div class="col-md-12">
                         
-
-                             <div class="form-group col-md-6">
+ <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Jenis Surat</label>
                                 <select name="jenissurat" class="form-control" id="">
                                     <option disabled>-- pilih Jenis Surat  --</option>
@@ -59,17 +58,17 @@
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="exampleInputEmail1">Penerima Surat</label>
-                                <input type="text" name="penerima"  class="tags form-control @error('penerima') is-invalid @enderror" />
+                                <label for="exampleInputEmail1">Pengirim Surat</label>
+                                <input type="text" value="{{ $data->pengirimSurat }}" name="pengirimSurat"  class="tags form-control @error('pengirimSurat') is-invalid @enderror" />
                                 <div>
-                                    @if ($errors->has('penerima'))
-                                        <small class="form-text text-danger">{{ $errors->first('penerima') }}</small>
+                                    @if ($errors->has('pengirimSurat'))
+                                        <small class="form-text text-danger">{{ $errors->first('pengirimSurat') }}</small>
                                     @endif
                                 </div>
                             </div>
                                 <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Nomor Surat</label>
-                                <input type="text" name="nomorSurat"  class="tags form-control @error('nomorSurat') is-invalid @enderror" />
+                                <input type="text" value="{{ $data->nomorSurat }}" name="nomorSurat"  class="tags form-control @error('nomorSurat') is-invalid @enderror" />
                                 <div>
                                     @if ($errors->has('nomorSurat'))
                                         <small class="form-text text-danger">{{ $errors->first('nomorSurat') }}</small>
@@ -79,7 +78,7 @@
 
                             <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Perihal</label>
-                                <input type="text" name="perihal"  class="tags form-control @error('perihal') is-invalid @enderror" />
+                                <input type="text" value="{{ $data->perihal }}" name="perihal"  class="tags form-control @error('perihal') is-invalid @enderror" />
                                 <div>
                                     @if ($errors->has('perihal'))
                                         <small class="form-text text-danger">{{ $errors->first('perihal') }}</small>
@@ -88,7 +87,7 @@
                             </div>
                           <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Tujuan</label>
-                                <input type="text" name="tujuan"  class="tags form-control @error('tujuan') is-invalid @enderror" />
+                                <input type="text" name="tujuan" value="{{ $data->tujuan }}"   class="tags form-control @error('tujuan') is-invalid @enderror" />
                                 <div>
                                     @if ($errors->has('tujuan'))
                                         <small class="form-text text-danger">{{ $errors->first('tujuan') }}</small>
@@ -96,7 +95,7 @@
                                 </div>
                             </div>
                              <div class="form-group col-md-6">
-                                <label for="exampleInputEmail1">Upload Surat Keluar : <a class="text-danger">Harap masukan file DOC/PDF. Max : 2MB</a></label>
+                                <label for="exampleInputEmail1">Upload Surat Masuk : <a class="text-danger">Harap masukan file DOC/PDF. Max : 2MB</a></label>
                                 <input type="file" name="lampiran" id="lampiran" class="form-control @error('lampiran') is-invalid @enderror" style="padding-bottom:30px;">
                                 @if ($errors->has('lampiran'))
                                     <small class="form-text text-danger">{{ $errors->first('lampiran') }}</small>
@@ -104,7 +103,7 @@
                             </div>
                              <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Catatan</label>
-                                <input type="text" name="catatan"  class="tags form-control @error('catatan') is-invalid @enderror" />
+                                <input type="text" value="{{ $data->catatan }}" name="catatan"  class="tags form-control @error('catatan') is-invalid @enderror" />
                                 <div>
                                     @if ($errors->has('catatan'))
                                         <small class="form-text text-danger">{{ $errors->first('catatan') }}</small>
@@ -125,16 +124,16 @@
                                     <small class="form-text text-danger">{{ $errors->first('sifatSurat') }}</small>
                                 @endif
                             </div>
-                        <div class="form-group col-md-6">
+                            <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Tanggal Surat</label>
-                                <input type="date" name="tanggalSurat"  class="tags form-control @error('tanggalSurat') is-invalid @enderror" />
+                                <input type="date" value="{{ $data->tanggalSurat }}" name="tanggalSurat"  class="tags form-control @error('tanggalSurat') is-invalid @enderror" />
                                 <div>
                                     @if ($errors->has('tanggalSurat'))
                                         <small class="form-text text-danger">{{ $errors->first('tanggalSurat') }}</small>
                                     @endif
                                 </div>
                             </div>
-                             {{--   <div class="form-group col-md-6">
+                          {{--  <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Status Teruskan Surat</label>
                                 <select name="statusTeruskan" class="form-control">
                                     <option disabled>-- pilih Status Teruskan Surat --</option>
@@ -156,18 +155,15 @@
                                     <small class="form-text text-danger">{{ $errors->first('statusBaca') }}</small>
                                 @endif
                             </div>  --}}
-                          
-
-                        
-
                            
+
 
                            
 
                         </div>
                         <div class="col-md-12 text-center">
                             <hr style="width: 50%" class="mt-0">
-                            <a href="{{ route('admin.jabatan') }}" class="btn btn-warning btn-sm" style="color: white"><i class="fa fa-arrow-left"></i>&nbsp; Kembali</a>
+                            <a href="{{ route('staf_tu.surat_masuk') }}" class="btn btn-warning btn-sm" style="color: white"><i class="fa fa-arrow-left"></i>&nbsp; Kembali</a>
                             <button type="reset" name="reset" class="btn btn-danger btn-sm"><i class="fa fa-refresh"></i>&nbsp;Ulangi</button>
                             <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check-circle"></i>&nbsp;Simpan Data</button>
                         </div>

@@ -8,6 +8,7 @@ use App\Models\SuratKeluar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class StafTuSuratKeluarController extends Controller
 {
@@ -95,4 +96,61 @@ class StafTuSuratKeluarController extends Controller
                             ->first();
         return $detail;
     }
+    public function edit($id){
+        $data = SuratKeluar::where('id',$id)->first();
+        $jenissurat = DB::table('tb_jenis_surat')->select('id','jenisSurat')->get();
+     
+        return view('staf_tu/surat_keluar.edit',compact('data','jenissurat'));
+    }
+    public function update(Request $request, $id){
+        $messages = [
+            'required' => ':attribute harus diisi',
+            'numeric' => ':attribute harus angka',
+        ];
+        $attributes = [
+           
+        ];
+        $this->validate($request, [
+        ],$messages,$attributes);
+
+
+         $model = $request->all();
+        $model['lampiran'] = null;
+        $slug_user = Str::slug(Auth::user()->namaUser);
+
+        if ($request->hasFile('lampiran')) {
+            $model['lampiran'] = $slug_user.'-'.Auth::user()->namaUser.'-'.date('now').'.'.$request->lampiran->getClientOriginalExtension();
+            $request->lampiran
+            ->move(public_path('/upload/surat_keluar/'.$slug_user), $model['lampiran']);
+        }
+        // return $data;
+
+        SuratKeluar::where('id',$id)->update([
+            'jenisSuratId' =>  $request->jenissurat,
+            'nomorSurat'  =>  $request->nomorSurat,
+            'penerima'  =>  $request->penerima,
+            'perihal'   =>  $request->perihal,
+            'tujuan' =>  $request->tujuan,
+            'tanggalSurat' =>  $request->tanggalSurat,
+
+            'catatan' =>  $request->catatan,
+            'sifatSurat' =>  $request->sifatSurat,
+            'lampiran'    =>  $model['lampiran'],
+
+            ]);
+
+            $notification = array(
+                'message' => 'Berhasil, data surat_keluar berhasil ditambahkan!',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('staf_tu.surat_keluar')->with($notification);
+        }
+        public function delete($id){
+            SuratKeluar::where('id',$id)->delete();
+            $notification = array(
+                'message' => 'Berhasil, data surat keluar berhasil dihapus!',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('staf_tu.surat_keluar')->with($notification);
+        }
 }

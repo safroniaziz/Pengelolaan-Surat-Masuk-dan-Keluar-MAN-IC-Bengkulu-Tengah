@@ -60,6 +60,8 @@ class SuratKeluarController extends Controller
             'penerima'  =>  $request->penerima,
             'perihal'   =>  $request->perihal,
             'tujuan' =>  $request->tujuan,
+            'tanggalSurat' =>  $request->tanggalSurat,
+
             'catatan' =>  $request->catatan,
             'sifatSurat' =>  $request->sifatSurat,
             'lampiran'    =>  $model['lampiran'],
@@ -118,6 +120,8 @@ class SuratKeluarController extends Controller
             'penerima'  =>  $request->penerima,
             'perihal'   =>  $request->perihal,
             'tujuan' =>  $request->tujuan,
+            'tanggalSurat' =>  $request->tanggalSurat,
+
             'catatan' =>  $request->catatan,
             'sifatSurat' =>  $request->sifatSurat,
             'lampiran'    =>  $model['lampiran'],

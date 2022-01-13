@@ -49,6 +49,8 @@
                                 <th>Nomor Surat</th>
                                 <th>Perihal</th>
                                 <th>Lampiran</th>
+                                <th>Tanggal Surat</th>
+
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -69,12 +71,20 @@
                                     </td>
                                     <td> {{ $surat->nomorSurat }} </td>
                                     <td> {{ $surat->perihal }} </td>
+                                    <td> {{ $surat->tanggalSurat }} </td>
+                                    
                                     <td>
                                         <a class="btn btn-primary btn-sm" href="{{ asset('upload/surat_keluar/'.\Illuminate\Support\Str::slug(Auth::user()->namaUser).'/'.$surat->lampiran) }}" download="{{ $surat->lampiran }}"><i class="fa fa-download"></i>&nbsp; Download</a>
                                         {{-- <a href="" class="btn btn-primary btn-sm"><i class="fa fa-download"></i>&nbsp; Download</a> --}}
                                     </td>
                                     <td>
                                         <a onclick="detail({{ $surat->id }})" style="color: white; cursor: pointer;" class="btn btn-info btn-sm"><i class="fa fa-info-circle"></i>&nbsp; Detail</a>
+                                       <a href="{{ route('staf_tu.surat_keluar.edit',[$surat->id]) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>&nbsp; Edit</a>
+                                    <form action="{{ route('staf_tu.surat_keluar.delete',[$surat->id]) }}" method="POST">
+                                        {{ csrf_field() }} {{ method_field("DELETE") }}
+
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
+                                    </form>
                                     </td>
                                 </tr>
                             @endforeach

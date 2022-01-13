@@ -93,8 +93,15 @@
                                             <label class="badge badge-danger"><i class="fa fa-minus-circle"></i>&nbsp; Belum Dibaca</label>
                                         @endif
                                     </td>
+
                                     <td>
                                         <a href="{{ route('staf_tu.surat_masuk.detail',[$surat->id]) }}" style="color: white; cursor: pointer;" class="btn btn-info btn-sm"><i class="fa fa-info-circle"></i>&nbsp; Detail</a>
+                                        <a href="{{ route('staf_tu.surat_masuk.edit',[$surat->id]) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>&nbsp; Edit</a>
+                                        <form action="{{ route('staf_tu.surat_masuk.delete',[$surat->id]) }}" method="POST">
+                                        {{ csrf_field() }} {{ method_field("DELETE") }}
+
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
+                                         </form>
                                     </td>
                                 </tr>
                             @endforeach

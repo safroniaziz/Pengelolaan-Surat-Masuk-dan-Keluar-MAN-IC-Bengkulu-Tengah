@@ -108,6 +108,9 @@ Route::group(['prefix'  => 'staf_tu/'],function(){
         Route::post('/',[StafTuSuratMasukController::class, 'post'])->name('staf_tu.surat_masuk.post');
         Route::patch('/',[StafTuSuratMasukController::class, 'teruskan'])->name('staf_tu.surat_masuk.teruskan');
         Route::get('/{id}/detail',[StafTuSuratMasukController::class, 'detail'])->name('staf_tu.surat_masuk.detail');
+        Route::get('{id}/edit',[StafTuSuratMasukController::class, 'edit'])->name('staf_tu.surat_masuk.edit');
+        Route::patch('{id}/update',[StafTuSuratMasukController::class, 'update'])->name('staf_tu.surat_masuk.update');
+        Route::delete('{id}/delete',[StafTuSuratMasukController::class, 'delete'])->name('staf_tu.surat_masuk.delete');
     });
 
     Route::group(['prefix'  => 'surat_keluar'],function(){
@@ -116,6 +119,9 @@ Route::group(['prefix'  => 'staf_tu/'],function(){
         Route::post('/',[StafTuSuratKeluarController::class, 'post'])->name('staf_tu.surat_keluar.post');
         Route::patch('/',[StafTuSuratKeluarController::class, 'teruskan'])->name('staf_tu.surat_keluar.teruskan');
         Route::get('/{id}/detail',[StafTuSuratKeluarController::class, 'detail'])->name('staf_tu.surat_keluar.detail');
+        Route::get('{id}/edit',[StafTuSuratKeluarController::class, 'edit'])->name('staf_tu.surat_keluar.edit');
+        Route::patch('{id}/update',[StafTuSuratKeluarController::class, 'update'])->name('staf_tu.surat_keluar.update');
+        Route::delete('{id}/delete',[StafTuSuratKeluarController::class, 'delete'])->name('staf_tu.surat_keluar.delete');
     });
 });
 

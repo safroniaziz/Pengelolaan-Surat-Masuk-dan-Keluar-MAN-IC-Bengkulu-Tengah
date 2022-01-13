@@ -2,16 +2,16 @@
     use App\Models\KlasifikasiBerkas;
 @endphp
 @extends('layouts.layout')
-@section('title', 'Manajemen Data Personal')
-@section('login_as', 'Guru')
+@section('title', 'Manajemen Data Jabatan')
+@section('login_as', 'Administrator')
 @section('user-login')
     @if (Auth::check())
-    {{ Auth::user()->pegNama }}
+    {{ Auth::user()->namaUser }}
     @endif
 @endsection
 @section('user-login2')
     @if (Auth::check())
-    {{ Auth::user()->pegNama }}
+    {{ Auth::user()->namaUser }}
     @endif
 @endsection
 @section('sidebar-menu')
