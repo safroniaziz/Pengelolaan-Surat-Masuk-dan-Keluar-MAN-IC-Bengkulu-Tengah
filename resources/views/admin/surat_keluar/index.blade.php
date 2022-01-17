@@ -71,7 +71,7 @@
                             <tr>
                                 <td>{{ $no++ }}</td>
                             
-                                <td>{{ $suratkeluar->jenisSuratId }}</td>
+                                <td>{{ $suratkeluar->jenisSurat }}</td>
                                 <td>{{ $suratkeluar->nomorSurat }}</td>
                                 <td>{{ $suratkeluar->penerima }}</td>
                                 <td>{{ $suratkeluar->perihal }}</td>

@@ -107,14 +107,17 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6">
+                           <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Hak Akses</label>
-                                <input type="text" name="hakAkses" value="{{ $data->hakAkses }}" class="tags form-control @error('hakAkses') is-invalid @enderror" />
-                                <div>
-                                    @if ($errors->has('hakAkses'))
-                                        <small class="form-text text-danger">{{ $errors->first('hakAkses') }}</small>
-                                    @endif
-                                </div>
+                                <select name="hakAkses" class="form-control">
+                                    <option disabled>-- pilih Hak Akses --</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="staf_tu">Staf TU</option>
+                                    <option value="pimpinan">Pimpinan</option>
+                                </select>
+                                @if ($errors->has('hakAkses'))
+                                    <small class="form-text text-danger">{{ $errors->first('hakAkses') }}</small>
+                                @endif
                             </div>
                                 {{--  <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Status</label>

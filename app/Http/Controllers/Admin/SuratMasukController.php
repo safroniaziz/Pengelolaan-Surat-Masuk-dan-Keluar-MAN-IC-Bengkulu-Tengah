@@ -19,7 +19,12 @@ class SuratMasukController extends Controller
     }
 
     public function index(){
-        $suratmasuks = SuratMasuk::all();
+        $suratmasuks = SuratMasuk::join('tb_jenis_surat','tb_jenis_surat.id','tb_surat_masuk.jenisSuratId')
+        ->select('tb_surat_masuk.id','jenisSurat','pengirimSurat','nomorSurat','perihal',
+                'tujuan','lampiran','catatan','sifatSurat','tanggalSurat','statusTeruskan',
+                'statusBaca','tb_surat_masuk.created_at')
+        ->orderBy('created_at','desc')
+        ->get();
       
         $jenissurat = DB::table('tb_jenis_surat')->select('id','jenisSurat')->get();
         // $ruangans = PenggunaRuang::join('ruangans','ruangans.id','pengguna_ruangs.ruang_id')->get();

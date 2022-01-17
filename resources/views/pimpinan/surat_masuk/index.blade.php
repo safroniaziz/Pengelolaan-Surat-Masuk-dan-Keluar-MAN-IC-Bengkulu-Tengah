@@ -101,8 +101,10 @@
                                             <label class="badge badge-danger"><i class="fa fa-minus-circle"></i>&nbsp; Belum Dibaca</label>
                                         @endif
                                     </td>
+
                                     <td>
-                                        <a href="{{ route('pimpinan.surat_masuk.detail',[$surat->id]) }}" style="color: white; cursor: pointer;" class="btn btn-info btn-sm"><i class="fa fa-info-circle"></i>&nbsp; Detail</a>
+                                     <a onclick="detail({{ $surat->id }})" style="color: white; cursor: pointer;" class="btn btn-info btn-sm"><i class="fa fa-info-circle"></i>&nbsp; Detail</a>
+                                        {{--  <a href="{{ route('pimpinan.surat_masuk.detail',[$surat->id]) }}" style="color: white; cursor: pointer;" class="btn btn-info btn-sm"><i class="fa fa-info-circle"></i>&nbsp; Detail</a>  --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -167,5 +169,30 @@
             $('#modalKonfirmasiDisposisi').modal('show');
             $('#disposisiId').val(id);
         }
+           function detail(id){
+            // alert(id);
+            $.ajax({
+                url: "{{ url('pimpinan/surat_keluar') }}"+'/'+ id + "/detail",
+                type: "GET",
+                dataType: "JSON",
+                success: function(data){
+                    $('#modalDetail').modal('show');
+                    $('#judulDetail').text(data['pengirimSurat'])
+                    $('#jenisSurat').text(data['jenisSurat'])
+                    $('#pengirimSurat').text(data['pengirimSurat'])
+                    $('#nomorSurat').text(data['nomorSurat'])
+                    $('#perihal').text(data['perihal'])
+                    $('#tujuan').text(data['tujuan'])
+                    $('#lampiran').text(data['lampiran'])
+                    $('#catatan').text(data['catatan'])
+                    $('#sifatSurat').text(data['sifatSurat'])
+                    $('#tanggalSurat').text(data['tanggalSurat'])
+                },
+                error:function(){
+                    alert("Nothing Data");
+                }
+            });
+        }
     </script>
 @endpush
+
