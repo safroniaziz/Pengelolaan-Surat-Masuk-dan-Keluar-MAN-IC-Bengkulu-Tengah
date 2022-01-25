@@ -108,6 +108,7 @@ Route::group(['prefix'  => 'staf_tu/'],function(){
         Route::post('/',[StafTuSuratMasukController::class, 'post'])->name('staf_tu.surat_masuk.post');
         Route::patch('/',[StafTuSuratMasukController::class, 'teruskan'])->name('staf_tu.surat_masuk.teruskan');
         Route::get('/{id}/detail',[StafTuSuratMasukController::class, 'detail'])->name('staf_tu.surat_masuk.detail');
+        Route::get('/{id}/baca_surat',[StafTuSuratMasukController::class, 'bacaSurat'])->name('staf_tu.surat_masuk.baca_surat');
     });
 
     Route::group(['prefix'  => 'surat_keluar'],function(){
@@ -129,7 +130,10 @@ Route::group(['prefix'  => 'pimpinan/'],function(){
         Route::post('/',[PimpinanSuratMasukController::class, 'post'])->name('pimpinan.surat_masuk.post');
         Route::patch('/',[PimpinanSuratMasukController::class, 'teruskan'])->name('pimpinan.surat_masuk.teruskan');
         Route::get('/{id}/detail',[PimpinanSuratMasukController::class, 'detail'])->name('pimpinan.surat_masuk.detail');
-        Route::POST('/disposisikan',[PimpinanSuratMasukController::class, 'disposisikan'])->name('pimpinan.surat_masuk.disposisikan');
+        Route::patch('/disposisikan',[PimpinanSuratMasukController::class, 'disposisikan'])->name('pimpinan.surat_masuk.disposisikan');
+        Route::patch('/disposisikan2',[PimpinanSuratMasukController::class, 'disposisikan2'])->name('pimpinan.surat_masuk.disposisikan2');
+        Route::get('/{id}/baca_surat',[PimpinanSuratMasukController::class, 'bacaSurat'])->name('pimpinan.surat_masuk.baca_surat');
+        Route::get('/{disposisiId}/baca_surat2',[PimpinanSuratMasukController::class, 'bacaSurat2'])->name('pimpinan.surat_masuk.baca_surat2');
     });
 
     Route::group(['prefix'  => 'surat_keluar'],function(){
@@ -139,4 +143,5 @@ Route::group(['prefix'  => 'pimpinan/'],function(){
         Route::patch('/',[PimpinanSuratKeluarController::class, 'teruskan'])->name('pimpinan.surat_keluar.teruskan');
         Route::get('/{id}/detail',[PimpinanSuratKeluarController::class, 'detail'])->name('pimpinan.surat_keluar.detail');
     });
+
 });

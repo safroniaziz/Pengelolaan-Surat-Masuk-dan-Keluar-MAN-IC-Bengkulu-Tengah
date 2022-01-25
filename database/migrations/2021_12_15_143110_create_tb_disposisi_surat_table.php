@@ -18,7 +18,7 @@ class CreateTbDisposisiSuratTable extends Migration
             $table->unsignedBigInteger('suratMasukId');
             $table->unsignedBigInteger('pengirimId')->nullable();
             $table->unsignedBigInteger('penerimaId')->nullable();
-            $table->enum('statusDisposisi',['sudah','belum']);
+            $table->enum('statusDisposisi',['menunggu','selesai','disposisi']);
             $table->enum('statusBacaDisposisi',['sudah','belum']);
             $table->timestamps();
         });

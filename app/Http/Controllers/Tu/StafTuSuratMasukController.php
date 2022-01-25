@@ -8,14 +8,18 @@ use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
+use Illuminate\Support\Facades\DB;
 
 class StafTuSuratMasukController extends Controller
 {
     public function index(){
         $surat_masuks = SuratMasuk::join('tb_jenis_surat','tb_jenis_surat.id','tb_surat_masuk.jenisSuratId')
+                        ->join('tb_user','tb_user.id','tb_surat_masuk.penginputId')
                         ->select('tb_surat_masuk.id','jenisSurat','pengirimSurat','nomorSurat','perihal',
                                 'tujuan','lampiran','catatan','sifatSurat','tanggalSurat','statusTeruskan',
-                                'statusBaca','tb_surat_masuk.created_at')
+                                'statusBaca','tb_surat_masuk.created_at','namaUser as namaPenginput')
                         ->orderBy('created_at','desc')
                         ->get();
         // return $surat_masuks;
@@ -61,12 +65,13 @@ class StafTuSuratMasukController extends Controller
 
         $model = $request->all();
         $model['lampiran'] = null;
+        $slug_pengirim = Str::slug($request->pengirimSurat);
         $slug_user = Str::slug(Auth::user()->namaUser);
 
         if ($request->hasFile('lampiran')) {
-            $model['lampiran'] = $slug_user.'-'.$slug_user.'-'.date('now').'.'.$request->lampiran->getClientOriginalExtension();
+            $model['lampiran'] = $slug_pengirim.'-'.$request->tanggalSurat.'-'.$slug_user.'-'.date('now').'.'.$request->lampiran->getClientOriginalExtension();
             $request->lampiran
-            ->move(public_path('/upload/surat_masuk/'.$slug_user), $model['lampiran']);
+            ->move(public_path('/upload/surat_masuk/'.$slug_pengirim), $model['lampiran']);
         }
         SuratMasuk::create([
             'jenisSuratId'=>  $request->jenisSuratId,
@@ -78,6 +83,7 @@ class StafTuSuratMasukController extends Controller
             'catatan'=>  $request->catatan,
             'sifatSurat'=>  $request->sifatSurat,
             'tanggalSurat'=>  $request->tanggalSurat,
+            'penginputId'   =>  Auth::user()->id,
         ]);
 
         $notification = array(
@@ -97,13 +103,39 @@ class StafTuSuratMasukController extends Controller
     }
 
     public function teruskan(Request $request){
-        SuratMasuk::where('id',$request->teruskanId)->update([
-            'statusTeruskan'    =>  'sudah',
-        ]);
-        $notification = array(
-            'message' => 'Berhasil, data surat masuk berhasil diteruskan!',
-            'alert-type' => 'success'
-        );
-        return redirect()->route('staf_tu.surat_masuk')->with($notification);
+        DB::beginTransaction();
+        try{
+            SuratMasuk::where('id',$request->teruskanId)->update([
+                'statusTeruskan'    =>  'sudah',
+                'penerusId'         => Auth::user()->id,
+            ]);
+            $data = SuratMasuk::where('id',$request->teruskanId)->select('pengirimSurat')->first();
+            $isi_email = [
+                'title' =>  'Pemberitahuan Surat Masuk Baru',
+                'body'  =>  'Assalammualaikum, terdapat surat masuk baru dari '."<b>".$data->pengirimSurat."</b>".' yang sudah diteruskan oleh tata usaha ke kepala sekolah'
+            ];
+            $tujuan = 'safroni.aziz@unib.ac.id';
+            Mail::to($tujuan)->send(new SendMail($isi_email));
+            DB::commit();
+            $notification = array(
+                'message' => 'Berhasil, data surat masuk berhasil diteruskan!',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('staf_tu.surat_masuk')->with($notification);
+        }catch(\Exception $e){
+            DB::rollback();
+            $notification2 = array(
+                'message' => 'Gagal, data surat masuk gagal diteruskan!',
+                'alert-type' => 'error'
+            );
+            return redirect()->route('staf_tu.surat_masuk')->with($notification2);
+        }
+    }
+
+    public function bacaSurat($id, Request $request){
+        $user = $request->pengirimSurat;
+        $file = $request->lampiran;
+        $path = 'upload/surat_masuk/'.\Illuminate\Support\Str::slug($user).'/'.$file;
+        return response()->file($path);
     }
 }

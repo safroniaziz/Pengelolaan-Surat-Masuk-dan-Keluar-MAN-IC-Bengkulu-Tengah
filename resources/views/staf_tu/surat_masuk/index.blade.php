@@ -72,7 +72,12 @@
                                     <td> {{ $surat->nomorSurat }} </td>
                                     <td> {{ $surat->perihal }} </td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm" href="{{ asset('upload/surat_masuk/'.\Illuminate\Support\Str::slug(Auth::user()->namaUser).'/'.$surat->lampiran) }}" download="{{ $surat->lampiran }}"><i class="fa fa-download"></i>&nbsp; Download</a>
+                                        <form method="get" action="{{ route('staf_tu.surat_masuk.baca_surat',[$surat->id]) }}" target="_blank">
+                                            {{ csrf_field() }} {{ method_field("GET") }}
+                                            <input type="hidden" name="pengirimSurat" value="{{ $surat->pengirimSurat }}">
+                                            <input type="hidden" name="lampiran" value="{{ $surat->lampiran}}">
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa-check-circle"></i>&nbsp; Baca Surat</button>
+                                        </form>
                                         {{-- <a href="" class="btn btn-primary btn-sm"><i class="fa fa-download"></i>&nbsp; Download</a> --}}
                                     </td>
                                     <td>

@@ -11,6 +11,7 @@ class Jabatan extends Model
     protected $table = 'tb_jabatan';
     protected $fillable = [
         'namaJabatan',
-        'keterangan'
+        'keterangan',
+        'singkatanJabatan'
     ];
 }

@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                           <div class="form-group col-md-6">
-                                <label for="exampleInputEmail1">Tujuan</label>
+                                <label for="exampleInputEmail1">Tujuan Mengirim Surat</label>
                                 <input type="text" name="tujuan"  class="tags form-control @error('tujuan') is-invalid @enderror" />
                                 <div>
                                     @if ($errors->has('tujuan'))
@@ -101,7 +101,7 @@
                                 @endif
                             </div>
                              <div class="form-group col-md-12">
-                                <label for="exampleInputEmail1">Catatan</label>
+                                <label for="exampleInputEmail1">Catatan <a style="color:red;">jika tidak ada catatan, masukan tanda strip (-)</a></label>
                                 <textarea name="catatan" id="" class="form-control" cols="30" rows="3"></textarea>
                                 <div>
                                     @if ($errors->has('catatan'))

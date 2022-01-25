@@ -20,7 +20,8 @@ class SuratMasuk extends Model
         'sifatSurat',
         'tanggalSurat',
         'statusTeruskan',
-        'statusBaca'
-
+        'statusBaca',
+        'penginputId',
+        'teruskanId'
     ];
 }

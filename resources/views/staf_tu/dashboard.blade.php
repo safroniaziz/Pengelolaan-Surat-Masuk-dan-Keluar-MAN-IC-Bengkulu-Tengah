@@ -221,9 +221,6 @@
         }); // end am4core.ready()
     </script>
     <!-- Resources -->
-  <script src="{{ asset('assets/offline/cdn/core.js') }}"></script>
-  <script src="{{ asset('assets/offline/cdn/charts.js') }}"></script>
-  <script src="{{ asset('assets/offline/cdn/animated.js') }}"></script>
 
 <!-- Chart code -->
 <script>

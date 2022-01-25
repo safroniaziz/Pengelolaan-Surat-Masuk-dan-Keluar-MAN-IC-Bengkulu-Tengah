@@ -1,8 +1,6 @@
 @extends('layouts.layout')
 @section('title', 'Dashboard')
-@section('login_as')
-    {{ Auth::user()->jabatan->namaJabatan }}
-@endsection
+@section('login_as','Pimpinan')
 @section('user-login')
     @if (Auth::check())
     {{ Auth::user()->namaUser }}
@@ -36,7 +34,7 @@
     </header>
     <div class="panel-body" style="border-top: 1px solid #eee; padding:15px; background:white;">
         <div class="row" style="margin-right:-15px; margin-left:-15px;">
-            <div class="col-md-12">Selamat datang <strong> </strong> di halaman Dashboard Pimpinan<b> Sistem Informasi Manajemen Surat Madrasah Aliyah Negeri Insan Cendikia (MAN IC) Bengkulu Tengah</b></div>
+            <div class="col-md-12">Selamat datang <strong> </strong> di halaman Dashboard Pimpinan<b> Sistem Informasi Manajemen Surat Madrasah Aliyah Negeri Insan Cendikia (MAN IC) Bengkulu Tengah</b> sebagai <b>{{ Auth::user()->jabatan->namaJabatan }}</b></div>
         </div>
     </div>
 </section>
@@ -223,9 +221,6 @@
         }); // end am4core.ready()
     </script>
     <!-- Resources -->
-  <script src="{{ asset('assets/offline/cdn/core.js') }}"></script>
-  <script src="{{ asset('assets/offline/cdn/charts.js') }}"></script>
-  <script src="{{ asset('assets/offline/cdn/animated.js') }}"></script>
 
 <!-- Chart code -->
 <script>
