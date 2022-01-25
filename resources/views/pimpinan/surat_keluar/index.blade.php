@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('title', 'Manajemen Surat Keluar')
-@section('login_as', 'Staf Tata Usaha')
+@section('login_as', 'Pimpinan')
 @section('user-login')
     @if (Auth::check())
     {{ Auth::user()->namaUser }}
@@ -12,7 +12,7 @@
     @endif
 @endsection
 @section('sidebar-menu')
-    @include('staf_tu/sidebar')
+    @include('pimpinan/sidebar')
 @endsection
 @section('content')
     <section class="panel" style="margin-bottom:20px;">
@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="col-md-12">
-                    <a href="{{ route('staf_tu.surat_keluar.add') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp; Tambah Surat Keluar</a>
+                    <a href="{{ route('pimpinan.surat_keluar.add') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp; Tambah Surat Keluar</a>
                     <table class="table table-striped table-bordered" id="table" style="width:100%;">
                         <thead>
                             <tr>
@@ -79,8 +79,8 @@
                                     </td>
                                     <td>
                                         <a onclick="detail({{ $surat->id }})" style="color: white; cursor: pointer;" class="btn btn-info btn-sm"><i class="fa fa-info-circle"></i>&nbsp; Detail</a>
-                                       <a href="{{ route('staf_tu.surat_keluar.edit',[$surat->id]) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>&nbsp; Edit</a>
-                                    <form action="{{ route('staf_tu.surat_keluar.delete',[$surat->id]) }}" method="POST">
+                                       <a href="{{ route('pimpinan.surat_keluar.edit',[$surat->id]) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>&nbsp; Edit</a>
+                                    <form action="{{ route('pimpinan.surat_keluar.delete',[$surat->id]) }}" method="POST">
                                         {{ csrf_field() }} {{ method_field("DELETE") }}
 
                                         <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
@@ -184,7 +184,7 @@
         function detail(id){
             // alert(id);
             $.ajax({
-                url: "{{ url('staf_tu/surat_keluar') }}"+'/'+ id + "/detail",
+                url: "{{ url('pimpinan/surat_keluar') }}"+'/'+ id + "/detail",
                 type: "GET",
                 dataType: "JSON",
                 success: function(data){

@@ -85,7 +85,7 @@ Route::group(['prefix'  => 'admin/'],function(){
         Route::patch('{id}/update',[JenisSuratController::class, 'update'])->name('admin.jenis_surat.update');
         Route::delete('{id}/delete',[JenisSuratController::class, 'delete'])->name('admin.jenis_surat.delete');
     });
-    Route::group(['prefix'  => 'manajemen_user'],function(){
+    Route::group(['prefix'  => 'manajemen_pimpinan'],function(){
         Route::get('/',[UserController::class, 'index'])->name('admin.user');
         Route::get('/add',[UserController::class, 'add'])->name('admin.user.add');
 
@@ -95,6 +95,22 @@ Route::group(['prefix'  => 'admin/'],function(){
         Route::delete('{id}/delete',[UserController::class, 'delete'])->name('admin.user.delete');
         Route::patch('/aktifkanStatus/{id}', 'UserController@aktifkanStatus')->name('admin.user.aktifkanStatus');
         Route::patch('/nonAktifkanStatus/{id}', 'UserController@nonAktifkanStatus')->name('admin.user.nonAktifkanStatus');
+    });
+    Route::group(['prefix'  => 'manajemen_administrator'],function(){
+        Route::get('/',[UserController::class, 'indexadministrator'])->name('admin.administrator');
+        Route::get('/add',[UserController::class, 'addadministrator'])->name('admin.administrator.add');
+        Route::post('/',[UserController::class, 'postadministrator'])->name('admin.administrator.post');
+        Route::get('{id}/edit',[UserController::class, 'editadministrator'])->name('admin.administrator.edit');
+        Route::patch('{id}/update',[UserController::class, 'updateadministrator'])->name('admin.administrator.update');
+        Route::delete('{id}/delete',[UserController::class, 'deleteadministrator'])->name('admin.administrator.delete');
+    });
+    Route::group(['prefix'  => 'manajemen_staf_tu'],function(){
+        Route::get('/',[UserController::class, 'indexstaf_tu'])->name('admin.staf_tu');
+        Route::get('/add',[UserController::class, 'addstaf_tu'])->name('admin.staf_tu.add');
+        Route::post('/',[UserController::class, 'poststaf_tu'])->name('admin.staf_tu.post');
+        Route::get('{id}/edit',[UserController::class, 'editstaf_tu'])->name('admin.staf_tu.edit');
+        Route::patch('{id}/update',[UserController::class, 'updatestaf_tu'])->name('admin.staf_tu.update');
+        Route::delete('{id}/delete',[UserController::class, 'deletestaf_tu'])->name('admin.staf_tu.delete');
     });
 });
 
@@ -117,6 +133,9 @@ Route::group(['prefix'  => 'staf_tu/'],function(){
         Route::post('/',[StafTuSuratKeluarController::class, 'post'])->name('staf_tu.surat_keluar.post');
         Route::patch('/',[StafTuSuratKeluarController::class, 'teruskan'])->name('staf_tu.surat_keluar.teruskan');
         Route::get('/{id}/detail',[StafTuSuratKeluarController::class, 'detail'])->name('staf_tu.surat_keluar.detail');
+        Route::get('{id}/edit',[StafTuSuratKeluarController::class, 'edit'])->name('staf_tu.surat_keluar.edit');
+        Route::patch('{id}/update',[StafTuSuratKeluarController::class, 'update'])->name('staf_tu.surat_keluar.update');
+        Route::delete('{id}/delete',[StafTuSuratKeluarController::class, 'delete'])->name('staf_tu.surat_keluar.delete');
     });
 });
 
@@ -142,6 +161,9 @@ Route::group(['prefix'  => 'pimpinan/'],function(){
         Route::post('/',[PimpinanSuratKeluarController::class, 'post'])->name('pimpinan.surat_keluar.post');
         Route::patch('/',[PimpinanSuratKeluarController::class, 'teruskan'])->name('pimpinan.surat_keluar.teruskan');
         Route::get('/{id}/detail',[PimpinanSuratKeluarController::class, 'detail'])->name('pimpinan.surat_keluar.detail');
+        Route::get('{id}/edit',[PimpinanSuratKeluarController::class, 'edit'])->name('pimpinan.surat_keluar.edit');
+        Route::patch('{id}/update',[PimpinanSuratKeluarController::class, 'update'])->name('pimpinan.surat_keluar.update');
+        Route::delete('{id}/delete',[PimpinanSuratKeluarController::class, 'delete'])->name('pimpinan.surat_keluar.delete');
     });
 
 });

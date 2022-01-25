@@ -2,16 +2,16 @@
     use App\Models\KlasifikasiBerkas;
 @endphp
 @extends('layouts.layout')
-@section('title', 'Manajemen Data Personal')
-@section('login_as', 'Guru')
+@section('title', 'Manajemen Data User')
+@section('login_as', 'Administrator')
 @section('user-login')
     @if (Auth::check())
-    {{ Auth::user()->pegNama }}
+    {{ Auth::user()->namaUser }}
     @endif
 @endsection
 @section('user-login2')
     @if (Auth::check())
-    {{ Auth::user()->pegNama }}
+    {{ Auth::user()->namaUser }}
     @endif
 @endsection
 @section('sidebar-menu')
@@ -57,7 +57,6 @@
                                 <th>Nomor HP</th>
                                 <th>Hak Akses</th>
                                 <th>Status</th>
-                                <th>Ubah Status</th>
                             
                                 <th>Aksi</th>
                             </tr>
@@ -83,7 +82,7 @@
                                        @endif
                                    </td>
                             
-                                 <td>
+                                 {{--  <td>
                                     @if ($user->status== "aktif")
                                         <form action="{{ route('admin.user.nonAktifkanStatus', [$user->id]) }}" method="POST">
                                             {{ csrf_field() }} {{ method_field('PATCH') }}
@@ -95,7 +94,7 @@
                                             <button type="submit" class="btn btn-primary btn-sm" style="color:white; cursor:pointer;"><i class="fa fa-thumbs-up"></i></button>
                                         </form>
                                     @endif
-                                   </td>
+                                   </td>  --}}
                                    <td>
                                     <a href="{{ route('admin.user.edit',[$user->id]) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>&nbsp; Edit</a>
                                     <form action="{{ route('admin.user.delete',[$user->id]) }}" method="POST">

@@ -2,7 +2,7 @@
     use App\Models\KlasifikasiBerkas;
 @endphp
 @extends('layouts.layout')
-@section('title', 'Manajemen Data Jenis Surat')
+@section('title', 'Manajemen Data User')
 @section('login_as', 'Administrator')
 @section('user-login')
     @if (Auth::check())
@@ -41,47 +41,24 @@
                             </div>  --}}
                     @endif
                 </div>
-                {{--  <div class="col-md-12">
-                    <a href="{{ route('admin.jenis_surat.add') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;Tambah Data</a>
-                </div>  --}}
-                   <div class="row">
-                    <form action="{{ route('admin.jenis_surat.post') }}" enctype="multipart/form-data" method="POST">
-                        {{ csrf_field() }} {{ method_field('POST') }}
-                        <div class="col-md-12">
-                        
-
-                            <div class="form-group col-sm-12">
-                                <label for="exampleInputEmail1">Jenis Surat</label>
-                                <input type="text" name="jenisSurat" class="tags form-control @error('jenisSurat') is-invalid @enderror" />
-                                <div>
-                                    @if ($errors->has('jenisSurat'))
-                                        <small class="form-text text-danger">{{ $errors->first('jenisSurat') }}</small>
-                                    @endif
-                                </div>
-                            </div>
-
-         
-
-                            
-
-                        </div>
-                        <div class="col-md-12 text-center">
-                            <hr style="width: 50%" class="mt-0">
-                            <a href="{{ route('admin.jenis_surat') }}" class="btn btn-warning btn-sm" style="color: white"><i class="fa fa-arrow-left"></i>&nbsp; Kembali</a>
-                            <button type="reset" name="reset" class="btn btn-danger btn-sm"><i class="fa fa-refresh"></i>&nbsp;Ulangi</button>
-                            <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check-circle"></i>&nbsp;Simpan Data</button>
-                        </div>
-                    </form>
+                <div class="col-md-12">
+                    <a href="{{ route('admin.staf_tu.add') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;Tambah Data</a>
+                </div>
+                  
                 <div class="col-md-12">
                     <table class="table table-striped table-bordered" id="table" style="width:100%;">
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Jabatan</th>
-                             
-            
-                           
-                              
+                                <th>NIP</th>
+                                <th>Nama User</th>
+                                <th>Email</th>
+                                <th>Nomor HP</th>
+                                <th>Hak Akses</th>
+                                <th>Status</th>
+                                {{--  <th>Ubah Status</th>  --}}
+                            
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -89,18 +66,39 @@
                             @php
                                 $no=1;
                             @endphp
-                            @foreach ($jenissurats as $jenissurat)
+                            @foreach ($users as $user)
                             <tr>
                                 <td>{{ $no++ }}</td>
+                                <td>{{ $user->namaJabatan }}</td>
+                                <td>{{ $user->nip }}</td>
+                                <td>{{ $user->namaUser }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->telephone }}</td>
+                                <td>{{ $user->hakAkses }}</td>
+                                 <td>
+                                       @if ($user->status == "aktif")
+                                           <label class="badge badge-primary">Aktif</label>
+                                           @else
+                                           <label class="badge badge-danger">Tidak Aktif</label>
+                                       @endif
+                                   </td>
                             
-                                <td>{{ $jenissurat->jenisSurat }}</td>
-                               
-             
-                            
-                             
-                                <td>
-                                    <a href="{{ route('admin.jenis_surat.edit',[$jenissurat->id]) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>&nbsp; Edit</a>
-                                    <form action="{{ route('admin.jenis_surat.delete',[$jenissurat->id]) }}" method="POST">
+                                 {{--  <td>
+                                    @if ($user->status== "aktif")
+                                        <form action="{{ route('admin.user.nonAktifkanStatus', [$user->id]) }}" method="POST">
+                                            {{ csrf_field() }} {{ method_field('PATCH') }}
+                                            <button type="submit" class="btn btn-danger btn-sm" style="color:white; cursor:pointer;"><i class="fa fa-thumbs-down"></i></button>
+                                        </form>
+                                        @else
+                                        <form action="{{ route('admin.user.aktifkanStatus', [$user->id]) }}" method="POST">
+                                            {{ csrf_field() }} {{ method_field('PATCH') }}
+                                            <button type="submit" class="btn btn-primary btn-sm" style="color:white; cursor:pointer;"><i class="fa fa-thumbs-up"></i></button>
+                                        </form>
+                                    @endif
+                                   </td>  --}}
+                                   <td>
+                                    <a href="{{ route('admin.staf_tu.edit',[$user->id]) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>&nbsp; Edit</a>
+                                    <form action="{{ route('admin.staf_tu.delete',[$user->id]) }}" method="POST">
                                         {{ csrf_field() }} {{ method_field("DELETE") }}
 
                                         <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
@@ -112,11 +110,11 @@
                         </tbody>
                     </table>
                     <!-- Modal Hapus-->
-                    {{--  <div class="modal fade modal-danger" id="modalhapus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade modal-danger" id="modalhapus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <form action="{{ route('admin.jenis_surat.delete',[$jenissurat->id]) }}"method="POST">
-                                    {{ csrf_field() }} {{ method_field('DELETE') }}
+                                {{--  <form action="{{ route('admin.surat_masuk.delete',[$user->id]) }}"method="POST">
+                                    {{ csrf_field() }} {{ method_field('DELETE') }}  --}}
                                     <div class="modal-header">
                                         <p style="font-size:15px; font-weight:bold;" class="modal-title"><i class="fa fa-trash"></i>&nbsp;Form Konfirmasi Hapus Data</p>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -140,7 +138,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  --}}
+            </div>
         </div>
     </section>
 @endsection

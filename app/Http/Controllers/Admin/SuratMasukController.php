@@ -19,10 +19,17 @@ class SuratMasukController extends Controller
     }
 
     public function index(){
-        $suratmasuks = SuratMasuk::all();
+        $suratmasuks = SuratMasuk::join('tb_jenis_surat','tb_jenis_surat.id','tb_surat_masuk.jenisSuratId')
+        ->select('tb_surat_masuk.id','jenisSurat','pengirimSurat','nomorSurat','perihal',
+                'tujuan','lampiran','catatan','sifatSurat','tanggalSurat','statusTeruskan',
+                'statusBaca','tb_surat_masuk.created_at')
+        ->orderBy('created_at','desc')
+        ->get();
       
         $jenissurat = DB::table('tb_jenis_surat')->select('id','jenisSurat')->get();
-        // $suratmasuk = SuratMasuk::leftJoin('tb_jenis_surat','tb_jenis_surat.id','tb_surat_masuk.jenisSuratId')->get();
+        // $ruangans = PenggunaRuang::join('ruangans','ruangans.id','pengguna_ruangs.ruang_id')->get();
+
+        // $suratmasuks = SuratMasuk::join('tb_jenis_surat','tb_jenis_surat.id','tb_surat_masuk.jenisSuratId')->get();
         return view('admin/surat_masuk.index',compact('suratmasuks','jenissurat'));
     }
     public function add(){
@@ -45,7 +52,15 @@ class SuratMasukController extends Controller
       
         ];
         $this->validate($request, [
-       
+            'jenisSuratId'  =>  'required',
+            'pengirimSurat'  =>  'required',
+            'nomorSurat'  =>  'required',
+            'perihal'  =>  'required',
+            'tujuan'  =>  'required',
+            'lampiran'  =>  'required|mimes:doc,pdf,docx,jpg|max:1000',
+            'catatan'  =>  'required',
+            'sifatSurat'  =>  'required',
+            'tanggalSurat'  =>  'required',
         ],$messages,$attributes);
 
         $model = $request->all();
@@ -106,7 +121,7 @@ class SuratMasukController extends Controller
             $request->lampiran
             ->move(public_path('/upload/surat_masuk/'.$slug_user), $model['lampiran']);
         }
-        return $data;
+        // return $data;
 
         SuratMasuk::where('id',$id)->update([
             'jenisSuratId'=>  $request->jenissurat,

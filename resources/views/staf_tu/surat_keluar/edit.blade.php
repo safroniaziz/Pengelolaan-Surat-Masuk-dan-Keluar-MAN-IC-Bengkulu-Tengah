@@ -1,18 +1,18 @@
 @extends('layouts.layout')
-@section('title', 'Manajemen Klasifikasi Berkas')
-@section('login_as', 'Guru')
+@section('title', 'Manajemen Surat Keluar')
+@section('login_as', 'Staf TU')
 @section('user-login')
     @if (Auth::check())
-    {{ Auth::user()->pegNama }}
+    {{ Auth::user()->namaUser }}
     @endif
 @endsection
 @section('user-login2')
     @if (Auth::check())
-    {{ Auth::user()->pegNama }}
+    {{ Auth::user()->namaUser }}
     @endif
 @endsection
 @section('sidebar-menu')
-    @include('admin/sidebar')
+    @include('staf_tu/sidebar')
 @endsection
 @push('styles')
     <style>
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <form action="{{ route('admin.surat_keluar.update',[$data->id]) }}" enctype="multipart/form-data" method="POST">
+                    <form action="{{ route('staf_tu.surat_keluar.update',[$data->id]) }}" enctype="multipart/form-data" method="POST">
                         {{ csrf_field() }} {{ method_field('PATCH') }}
                         <div class="col-md-12">
                         
@@ -60,7 +60,7 @@
 
                             <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Penerima Surat</label>
-                                <input type="text" name="penerima"  class="tags form-control @error('penerima') is-invalid @enderror" />
+                                <input type="text" name="penerima" value="{{ $data->penerima }}"  class="tags form-control @error('penerima') is-invalid @enderror" />
                                 <div>
                                     @if ($errors->has('penerima'))
                                         <small class="form-text text-danger">{{ $errors->first('penerima') }}</small>
@@ -167,7 +167,7 @@
                         </div>
                         <div class="col-md-12 text-center">
                             <hr style="width: 50%" class="mt-0">
-                            <a href="{{ route('admin.jabatan') }}" class="btn btn-warning btn-sm" style="color: white"><i class="fa fa-arrow-left"></i>&nbsp; Kembali</a>
+                            <a href="{{ route('staf_tu.surat_keluar') }}" class="btn btn-warning btn-sm" style="color: white"><i class="fa fa-arrow-left"></i>&nbsp; Kembali</a>
                             <button type="reset" name="reset" class="btn btn-danger btn-sm"><i class="fa fa-refresh"></i>&nbsp;Ulangi</button>
                             <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check-circle"></i>&nbsp;Simpan Data</button>
                         </div>

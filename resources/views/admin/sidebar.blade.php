@@ -17,10 +17,17 @@
 {{--  <li>
     <a href=" {{ route('admin.disposisi_surat') }}"><i class="fa fa-comments"></i>Manajemen Disposisi Surat</a>
 </li>  --}}
-<li>
+{{--  <li>
     <a href=" {{ route('admin.user') }}"><i class="fa fa-users"></i>Manajemen User</a>
-</li>
+</li>  --}}
+<li><a><i class="fa fa-users"></i>Manajemen User <span class="fa fa-chevron-down"></span></a>
+    <ul class="nav child_menu">
+        <li><a href=" {{ route('admin.administrator') }}">Admin</a></li>
+        <li><a href=" {{ route('admin.staf_tu') }}">Staf TU</a></li>
+        <li><a href=" {{ route('admin.user') }}">Pimpinan</a></li>
 
+    </ul>
+</li>
 
 
 <li style="padding-left:2px;">

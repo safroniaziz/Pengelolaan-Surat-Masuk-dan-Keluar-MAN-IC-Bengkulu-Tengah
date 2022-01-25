@@ -17,7 +17,12 @@ class SuratKeluarController extends Controller
         $this->middleware(['auth','IsAdmin']);
     }
     public function index(){
-        $suratkeluars = SuratKeluar::all();
+        $suratkeluars = SuratKeluar::join('tb_jenis_surat','tb_jenis_surat.id','tb_surat_keluar.jenisSuratId')
+        ->select('tb_surat_keluar.id','jenisSurat','penerima','nomorSurat','perihal',
+                'tujuan','lampiran','catatan','sifatSurat','tanggalSurat',
+                'tb_surat_keluar.created_at')
+        ->orderBy('created_at','desc')
+        ->get();
        
         $jenissurat = DB::table('tb_jenis_surat')->select('id','jenisSurat')->get();
         // $suratkeluars = SuratKeluar::leftJoin('tb_jenis_surat','tb_jenis_surat.id','tb_surat_keluar.jenisSuratId')->get();
@@ -60,6 +65,8 @@ class SuratKeluarController extends Controller
             'penerima'  =>  $request->penerima,
             'perihal'   =>  $request->perihal,
             'tujuan' =>  $request->tujuan,
+            'tanggalSurat' =>  $request->tanggalSurat,
+
             'catatan' =>  $request->catatan,
             'sifatSurat' =>  $request->sifatSurat,
             'lampiran'    =>  $model['lampiran'],
@@ -118,6 +125,8 @@ class SuratKeluarController extends Controller
             'penerima'  =>  $request->penerima,
             'perihal'   =>  $request->perihal,
             'tujuan' =>  $request->tujuan,
+            'tanggalSurat' =>  $request->tanggalSurat,
+
             'catatan' =>  $request->catatan,
             'sifatSurat' =>  $request->sifatSurat,
             'lampiran'    =>  $model['lampiran'],

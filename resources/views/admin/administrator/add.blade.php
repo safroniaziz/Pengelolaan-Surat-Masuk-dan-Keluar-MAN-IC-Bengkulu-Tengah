@@ -1,14 +1,14 @@
 @extends('layouts.layout')
 @section('title', 'Manajemen Klasifikasi Berkas')
-@section('login_as', 'Guru')
+@section('login_as', 'Administrator')
 @section('user-login')
     @if (Auth::check())
-    {{ Auth::user()->pegNama }}
+    {{ Auth::user()->namaUser }}
     @endif
 @endsection
 @section('user-login2')
     @if (Auth::check())
-    {{ Auth::user()->pegNama }}
+    {{ Auth::user()->namaUser }}
     @endif
 @endsection
 @section('sidebar-menu')
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <form action="{{ route('admin.user.post') }}" enctype="multipart/form-data" method="POST">
+                    <form action="{{ route('admin.administrator.post') }}" enctype="multipart/form-data" method="POST">
                         {{ csrf_field() }} {{ method_field('POST') }}
                         <div class="col-md-12">
                         
@@ -111,8 +111,7 @@
                                 <select name="hakAkses" class="form-control">
                                     <option disabled>-- pilih Hak Akses --</option>
                                     <option value="admin">Admin</option>
-                                    <option value="staf_tu">Staf TU</option>
-                                    <option value="pimpinan">Pimpinan</option>
+                                   
                                 </select>
                                 @if ($errors->has('hakAkses'))
                                     <small class="form-text text-danger">{{ $errors->first('hakAkses') }}</small>

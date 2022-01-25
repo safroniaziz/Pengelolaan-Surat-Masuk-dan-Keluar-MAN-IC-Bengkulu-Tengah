@@ -123,7 +123,7 @@
                                     <small class="form-text text-danger">{{ $errors->first('sifatSurat') }}</small>
                                 @endif
                             </div>
-                            {{--  <div class="form-group col-md-6">
+                           <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Tanggal Surat</label>
                                 <input type="date" name="tanggalSurat"  class="tags form-control @error('tanggalSurat') is-invalid @enderror" />
                                 <div>
@@ -132,7 +132,8 @@
                                     @endif
                                 </div>
                             </div>
-                          <div class="form-group col-md-6">
+                            
+                           {{--  <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Status Teruskan Surat</label>
                                 <select name="statusTeruskan" class="form-control">
                                     <option disabled>-- pilih Status Teruskan Surat --</option>

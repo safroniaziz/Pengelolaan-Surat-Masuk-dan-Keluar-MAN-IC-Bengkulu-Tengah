@@ -126,8 +126,10 @@
                                             -
                                         @endif
                                     </td>
+
                                     <td>
-                                        <a href="{{ route('pimpinan.surat_masuk.detail',[$surat->id]) }}" style="color: white; cursor: pointer;" class="btn btn-info btn-sm"><i class="fa fa-info-circle"></i>&nbsp; Detail</a>
+                                     <a onclick="detail({{ $surat->id }})" style="color: white; cursor: pointer;" class="btn btn-info btn-sm"><i class="fa fa-info-circle"></i>&nbsp; Detail</a>
+                                        {{--  <a href="{{ route('pimpinan.surat_masuk.detail',[$surat->id]) }}" style="color: white; cursor: pointer;" class="btn btn-info btn-sm"><i class="fa fa-info-circle"></i>&nbsp; Detail</a>  --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -283,3 +285,4 @@
         });
     </script>
 @endpush
+

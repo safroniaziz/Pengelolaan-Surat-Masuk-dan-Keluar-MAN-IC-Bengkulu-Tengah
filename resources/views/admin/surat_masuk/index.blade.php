@@ -72,7 +72,7 @@
                             <tr>
                                 <td>{{ $no++ }}</td>
                             
-                                <td>{{ $suratmasuk->jenisSuratId }}</td>
+                                <td>{{ $suratmasuk->jenisSurat }}</td>
                                 <td>{{ $suratmasuk->nomorSurat }}</td>
                                 <td>{{ $suratmasuk->pengirimSurat }}</td>
                                 <td>{{ $suratmasuk->perihal }}</td>
