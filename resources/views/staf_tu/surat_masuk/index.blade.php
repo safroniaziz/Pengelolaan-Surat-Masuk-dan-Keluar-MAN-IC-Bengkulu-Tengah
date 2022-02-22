@@ -108,6 +108,7 @@
                                         <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
                                          </form>
                                     </td>
+                                    
                                 </tr>
                             @endforeach
                         </tbody>

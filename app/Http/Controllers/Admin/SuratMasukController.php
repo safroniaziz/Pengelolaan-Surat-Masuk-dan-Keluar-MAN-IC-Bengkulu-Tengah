@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SuratMasuk;
 use App\Models\JenisSurat;
-
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan;
+use App\Models\DisposisiSurat;
 
 class SuratMasukController extends Controller
 {
@@ -151,5 +154,11 @@ class SuratMasukController extends Controller
                 'alert-type' => 'success'
             );
             return redirect()->route('admin.surat_masuk')->with($notification);
+        }
+        public function bacaSurat($id, Request $request){
+            $user = $request->pengirimSurat;
+            $file = $request->lampiran;
+            $path = 'upload/surat_masuk/'.\Illuminate\Support\Str::slug($user).'/'.$file;
+            return response()->file($path);
         }
 }

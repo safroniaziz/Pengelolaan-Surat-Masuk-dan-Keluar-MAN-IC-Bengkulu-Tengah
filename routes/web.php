@@ -61,7 +61,8 @@ Route::group(['prefix'  => 'admin/'],function(){
     Route::group(['prefix'  => 'manajemen_surat_masuk'],function(){
         Route::get('/',[SuratMasukController::class, 'index'])->name('admin.surat_masuk');
         Route::get('/add',[SuratMasukController::class, 'add'])->name('admin.surat_masuk.add');
-
+        Route::get('/{id}/detail',[SuratMasukController::class, 'detail'])->name('admin.surat_masuk.detail');
+        Route::get('/{id}/baca_surat',[SuratMasukController::class, 'bacaSurat'])->name('admin.surat_masuk.baca_surat');
         Route::post('/',[SuratMasukController::class, 'post'])->name('admin.surat_masuk.post');
         Route::get('{id}/edit',[SuratMasukController::class, 'edit'])->name('admin.surat_masuk.edit');
         Route::patch('{id}/update',[SuratMasukController::class, 'update'])->name('admin.surat_masuk.update');
@@ -125,6 +126,9 @@ Route::group(['prefix'  => 'staf_tu/'],function(){
         Route::patch('/',[StafTuSuratMasukController::class, 'teruskan'])->name('staf_tu.surat_masuk.teruskan');
         Route::get('/{id}/detail',[StafTuSuratMasukController::class, 'detail'])->name('staf_tu.surat_masuk.detail');
         Route::get('/{id}/baca_surat',[StafTuSuratMasukController::class, 'bacaSurat'])->name('staf_tu.surat_masuk.baca_surat');
+        Route::get('{id}/edit',[StafTuSuratMasukController::class, 'edit'])->name('staf_tu.surat_masuk.edit');
+        Route::patch('{id}/update',[StafTuSuratMasukController::class, 'update'])->name('staf_tu.surat_masuk.update');
+        Route::delete('{id}/delete',[StafTuSuratMasukController::class, 'delete'])->name('staf_tu.surat_masuk.delete');
     });
 
     Route::group(['prefix'  => 'surat_keluar'],function(){
