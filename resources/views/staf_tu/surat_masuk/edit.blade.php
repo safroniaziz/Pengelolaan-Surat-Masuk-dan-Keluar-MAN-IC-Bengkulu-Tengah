@@ -95,7 +95,7 @@
                                 </div>
                             </div>
                              <div class="form-group col-md-6">
-                                <label for="exampleInputEmail1">Upload Surat Masuk : <a class="text-danger">Harap masukan file DOC/PDF. Max : 2MB</a></label>
+                                <label for="exampleInputEmail1">Upload Surat Masuk : <a class="text-danger">Harap masukan file PDF. Max : 1 MB</a></label>
                                 <input type="file" name="lampiran" id="lampiran" class="form-control @error('lampiran') is-invalid @enderror" style="padding-bottom:30px;">
                                 @if ($errors->has('lampiran'))
                                     <small class="form-text text-danger">{{ $errors->first('lampiran') }}</small>

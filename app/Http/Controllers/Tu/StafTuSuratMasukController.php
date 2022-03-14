@@ -62,7 +62,7 @@ class StafTuSuratMasukController extends Controller
             'nomorSurat'  =>  'required',
             'perihal'  =>  'required',
             'tujuan'  =>  'required',
-            'lampiran'  =>  'required|mimes:doc,pdf,docx,jpg|max:1000',
+            'lampiran'  =>  'required|mimes:pdf|max:1000',
             'catatan'  =>  'required',
             'sifatSurat'  =>  'required',
             'tanggalSurat'  =>  'required',
@@ -119,8 +119,9 @@ class StafTuSuratMasukController extends Controller
                 'title' =>  'Pemberitahuan Surat Masuk Baru',
                 'body'  =>  'Assalammualaikum, terdapat surat masuk baru dari '."<b>".$data->pengirimSurat."</b>".' yang sudah diteruskan oleh tata usaha ke kepala sekolah'
             ];
-            $tujuan = 'agoyunib@gmail.com';
-            Mail::to($tujuan)->send(new SendMail($isi_email));
+            $kepsek = User::where('jabatanId',1)->where('hakAkses','pimpinan')->first();
+            // return $kepsek;
+            Mail::to($kepsek->email)->send(new SendMail($isi_email));
             DB::commit();
             $notification = array(
                 'message' => 'Berhasil, data surat masuk berhasil diteruskan!',
@@ -140,35 +141,35 @@ class StafTuSuratMasukController extends Controller
     public function bacaSurat($id, Request $request){
         // DB::beginTransaction();
         // try {
-            Artisan::call('config:cache');
-            Artisan::call('cache:clear');
-            Artisan::call('view:clear');
-            Artisan::call('optimize:clear');
+            // Artisan::call('config:cache');
+            // Artisan::call('cache:clear');
+            // Artisan::call('view:clear');
+            // Artisan::call('optimize:clear');
             $data = SuratMasuk::where('id',$id)->select('pengirimSurat','lampiran','statusBaca')->first();
-            if ($data->statusBaca == "belum") {
-                $isi_email = [
-                    'title' =>  'Pemberitahuan Surat Masuk ',
-                    'body'  =>  'Assalammualaikum, surat masuk dari '."<b>".$data->pengirimSurat."</b>".' sudah dibaca oleh kepala sekolah'
-                ];
-                $tujuan = 'agoyunib@gmail.com';
-                Mail::to($tujuan)->send(new SendMail($isi_email));
+            // if ($data->statusBaca == "belum") {
+                // $isi_email = [
+                //     'title' =>  'Pemberitahuan Surat Masuk ',
+                //     'body'  =>  'Assalammualaikum, surat masuk dari '."<b>".$data->pengirimSurat."</b>".' sudah dibaca oleh kepala sekolah'
+                // ];
+                // $tujuan = 'agoyunib@gmail.com';
+                // Mail::to($tujuan)->send(new SendMail($isi_email));
 
-                SuratMasuk::where('id',$id)->update([
-                    'statusBaca' => 'sudah',
-                ]);
+                // SuratMasuk::where('id',$id)->update([
+                //     'statusBaca' => 'sudah',
+                // ]);
                 $user = $data->pengirimSurat;
                 $file = $data->lampiran;
                 $path = 'upload/surat_masuk/'.\Illuminate\Support\Str::slug($user).'/'.$file;
                 
-                DB::commit();
+                // DB::commit();
                 return response()->file($path);
-            }else {
-                $user = $data->pengirimSurat;
-                $file = $data->lampiran;
-                $path = 'upload/surat_masuk/'.\Illuminate\Support\Str::slug($user).'/'.$file;
-                DB::commit();
-                return response()->file($path);
-            }
+            // }else {
+            //     $user = $data->pengirimSurat;
+            //     $file = $data->lampiran;
+            //     $path = 'upload/surat_masuk/'.\Illuminate\Support\Str::slug($user).'/'.$file;
+            //     DB::commit();
+            //     return response()->file($path);
+            // }
             
         // } catch (\Exception $e) {
         //     DB::rollback();

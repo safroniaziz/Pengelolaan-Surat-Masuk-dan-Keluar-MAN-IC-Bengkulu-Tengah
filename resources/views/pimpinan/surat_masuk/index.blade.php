@@ -100,19 +100,19 @@
                                                 @endif
                                             @endif
                                         @else
-                                        @if ($surat->statusDisposisi == 'belum')
-                                                    <label class="badge badge-primary"><i class="fa fa-check-circle"></i>&nbsp; Belum Didisposisikan</label>
-                                                    <hr style="padding: 0px;">
-                                                    <button class="btn btn-primary btn-sm" disabled><i class="fa fa-arrow-right"></i>&nbsp; Disposisikan Surat</button>
-                                            @else
-                                            <label class="badge badge-danger"><i class="fa fa-minus-circle"></i>&nbsp; Belum Didisposisikan</label>
-                                            <hr style="padding: 0px;">
+                                        {{-- @if ($surat->statusDisposisi == 'menunggu') --}}
+                                                    {{-- <label class="badge badge-primary"><i class="fa fa-check-circle"></i>&nbsp; Belum Didisposisikan</label> --}}
+                                                    {{-- <hr style="padding: 0px;"> --}}
+                                                    {{-- <button class="btn btn-primary btn-sm" disabled><i class="fa fa-arrow-right"></i>&nbsp; Disposisikan Surat</button>
+                                            @else --}}
+                                            {{-- <label class="badge badge-danger"><i class="fa fa-minus-circle"></i>&nbsp; Belum Didisposisikan</label>
+                                            <hr style="padding: 0px;"> --}}
                                             @if (Auth::user()->jabatan->namaJabatan == "Kepala Sekolah")
                                                 <a onclick="disposisikan({{ $surat->id }})" class="btn btn-primary btn-sm" style="color: white; cursor: pointer;"><i class="fa fa-arrow-right"></i>&nbsp; Disposisikan Surat</a>
                                             @else
                                                 <a onclick="disposisikan2({{ $surat->disposisiId }})" class="btn btn-primary btn-sm" style="color: white; cursor: pointer;"><i class="fa fa-arrow-right"></i>&nbsp; Disposisikan Surat</a>
                                             @endif
-                                        @endif
+                                        {{-- @endif --}}
                                         @endif
                                     </td>
                                     <td>

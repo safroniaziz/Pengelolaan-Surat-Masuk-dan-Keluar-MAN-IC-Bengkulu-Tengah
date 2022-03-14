@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-        <title>Simpeg MAN IC | Login</title>
+        <title>Simas MAN IC | Login</title>
         <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}">
         <link href="{{ asset('assets/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
         <link rel="stylesheet" href=" {{ asset('css/style_login.css') }} ">

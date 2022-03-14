@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Response;
 
 class PimpinanSuratMasukController extends Controller
 {
@@ -62,7 +63,7 @@ class PimpinanSuratMasukController extends Controller
                     'pengirimId'            =>  Auth::user()->id,
                     'penerimaId'            =>  $request->penerimaId,
                     'statusBacaDisposisi'   =>  'belum',
-                    'statusDisposisi'       =>  'belum',
+                    'statusDisposisi'       =>  'menunggu',
                 ]);
                 SuratMasuk::where('id',$request->suratId)->update([
                     'isDisposisi'           =>  1,
@@ -94,7 +95,7 @@ class PimpinanSuratMasukController extends Controller
         // return $request->all();
         if ($request->disposisi == "tidak") {
             DisposisiSurat::where('id',$request->disposisiId)->update([
-                'statusDisposisi'   =>  'sudah',
+                'statusDisposisi'   =>  'selesai',
             ]);
             $notification = array(
                 'message' => 'Berhasil, tidak ada proses disposisi surat masuk!',
@@ -112,7 +113,7 @@ class PimpinanSuratMasukController extends Controller
                     'pengirimId'            =>  Auth::user()->id,
                     'penerimaId'            =>  $request->penerimaId,
                     'statusBacaDisposisi'   =>  'belum',
-                    'statusDisposisi'       =>  'belum',
+                    'statusDisposisi'       =>  'disposisi',
                 ]);
                 $isi_email = [
                     'title' =>  'Pemberitahuan Disposisi Surat ',
@@ -163,14 +164,15 @@ class PimpinanSuratMasukController extends Controller
             Artisan::call('cache:clear');
             Artisan::call('view:clear');
             Artisan::call('optimize:clear');
-            $data = SuratMasuk::where('id',$id)->select('pengirimSurat','lampiran','statusBaca')->first();
+            $data = SuratMasuk::where('id',$id)->select('pengirimSurat','lampiran','statusBaca','penginputId')->first();
             if ($data->statusBaca == "belum") {
                 $isi_email = [
                     'title' =>  'Pemberitahuan Surat Masuk ',
                     'body'  =>  'Assalammualaikum, surat masuk dari '."<b>".$data->pengirimSurat."</b>".' sudah dibaca oleh kepala sekolah'
                 ];
-                $tujuan = 'safroni.aziz@unib.ac.id';
-                Mail::to($tujuan)->send(new SendMail($isi_email));
+                $tujuan = User::where('id',$data->penginputId)->select('email')->first();
+                // $tujuan = 'safroni.aziz@unib.ac.id';
+                Mail::to($tujuan->email)->send(new SendMail($isi_email));
 
                 SuratMasuk::where('id',$id)->update([
                     'statusBaca' => 'sudah',
@@ -178,15 +180,20 @@ class PimpinanSuratMasukController extends Controller
                 $user = $data->pengirimSurat;
                 $file = $data->lampiran;
                 $path = 'upload/surat_masuk/'.\Illuminate\Support\Str::slug($user).'/'.$file;
-                
+                return Response::make(file_get_contents($path), 200, [
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="'.$file.'"'
+                ]);
                 DB::commit();
-                return response()->file($path);
             }else {
                 $user = $data->pengirimSurat;
                 $file = $data->lampiran;
                 $path = 'upload/surat_masuk/'.\Illuminate\Support\Str::slug($user).'/'.$file;
+                return Response::make(file_get_contents($path), 200, [
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="'.$file.'"'
+                ]);
                 DB::commit();
-                return response()->file($path);
             }
             
         } catch (\Exception $e) {
