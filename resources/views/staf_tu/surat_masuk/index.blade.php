@@ -48,6 +48,7 @@
                                 <th>Pengirim Surat</th>
                                 <th>Nomor Surat</th>
                                 <th>Perihal</th>
+                                <th>Ditujukan Kepada</th>
                                 <th>Lampiran</th>
                                 <th>Status Teruskan</th>
                                 <th>Status Baca</th>
@@ -65,12 +66,14 @@
                                         <a href="">{{ $surat->pengirimSurat }}</a>
                                         <hr style="margin: 5px 0px !important">
                                         <label class="badge badge-info">{{ $surat->jenisSurat }}</label>
+                                        <label style="text-transform: capitalize" class="badge badge-danger">{{ $surat->tanggalSurat }}</label>
                                         <label style="text-transform: capitalize" class="badge badge-primary">{{ $surat->sifatSurat }}</label>
-                                        <label class="badge badge-success">{{ $surat->tanggalSurat }}</label> <br>
+                                        <label class="badge badge-success">{{ $surat->tanggalSuratMasuk }}</label> <br>
                                         Diinput pada {{ $surat->created_at ? $surat->created_at->diffForHumans() : '-' }}
                                     </td>
                                     <td> {{ $surat->nomorSurat }} </td>
                                     <td> {{ $surat->perihal }} </td>
+                                    <td> {{ $surat->tujuan }} </td>
                                     <td>
                                         <form method="get" action="{{ route('staf_tu.surat_masuk.baca_surat',[$surat->id]) }}" target="_blank">
                                             {{ csrf_field() }} {{ method_field("GET") }}

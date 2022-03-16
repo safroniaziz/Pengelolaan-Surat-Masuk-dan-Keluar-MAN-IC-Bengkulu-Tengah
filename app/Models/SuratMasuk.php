@@ -19,6 +19,7 @@ class SuratMasuk extends Model
         'catatan',
         'sifatSurat',
         'tanggalSurat',
+        'tanggalSuratMasuk',
         'statusTeruskan',
         'statusBaca',
         'penginputId',

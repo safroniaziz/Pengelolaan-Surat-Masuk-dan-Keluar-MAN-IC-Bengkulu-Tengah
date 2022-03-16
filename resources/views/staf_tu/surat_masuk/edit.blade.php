@@ -133,6 +133,15 @@
                                     @endif
                                 </div>
                             </div>
+                             <div class="form-group col-md-6">
+                                <label for="exampleInputEmail1">Tanggal Surat Masuk</label>
+                                <input type="date" value="{{ $data->tanggalSuratMasuk }}" name="tanggalSuratMasuk"  class="tags form-control @error('tanggalSuratMasuk') is-invalid @enderror" />
+                                <div>
+                                    @if ($errors->has('tanggalSuratMasuk'))
+                                        <small class="form-text text-danger">{{ $errors->first('tanggalSuratMasuk') }}</small>
+                                    @endif
+                                </div>
+                            </div>
                           {{--  <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Status Teruskan Surat</label>
                                 <select name="statusTeruskan" class="form-control">

@@ -86,7 +86,7 @@
                             </div>
                             
                           <div class="form-group col-md-6">
-                                <label for="exampleInputEmail1">Tujuan</label>
+                                <label for="exampleInputEmail1">Ditujukan Kepada</label>
                                 <input type="text" name="tujuan"  class="tags form-control @error('tujuan') is-invalid @enderror" />
                                 <div>
                                     @if ($errors->has('tujuan'))

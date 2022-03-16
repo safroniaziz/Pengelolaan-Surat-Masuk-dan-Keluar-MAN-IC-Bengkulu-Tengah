@@ -48,6 +48,7 @@
                                 <th>Pengirim Surat</th>
                                 <th>Nomor Surat</th>
                                 <th>Perihal</th>
+                                <th>Ditujukan Kepada</th>
                                 <th>Lampiran</th>
                                 <th>Tanggal Surat</th>
 
@@ -71,6 +72,7 @@
                                     </td>
                                     <td> {{ $surat->nomorSurat }} </td>
                                     <td> {{ $surat->perihal }} </td>
+                                    <td> {{ $surat->tujuan }} </td>
                                     <td> {{ $surat->tanggalSurat }} </td>
                                     
                                     <td>

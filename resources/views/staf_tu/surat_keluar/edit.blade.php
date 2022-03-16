@@ -87,7 +87,7 @@
                                 </div>
                             </div>
                           <div class="form-group col-md-6">
-                                <label for="exampleInputEmail1">Tujuan</label>
+                                <label for="exampleInputEmail1">Ditujukan Kepada</label>
                                 <input type="text" name="tujuan" value="{{ $data->tujuan }}" class="tags form-control @error('tujuan') is-invalid @enderror" />
                                 <div>
                                     @if ($errors->has('tujuan'))
@@ -131,6 +131,15 @@
                                 <div>
                                     @if ($errors->has('tanggalSurat'))
                                         <small class="form-text text-danger">{{ $errors->first('tanggalSurat') }}</small>
+                                    @endif
+                                </div>
+                            </div>
+                                <div class="form-group col-md-6">
+                                <label for="exampleInputEmail1">Tanggal Surat Keluar</label>
+                                <input type="date" name="tanggalSuratKeluar" value="{{ $data->tanggalSuratKeluar }}" class="tags form-control @error('tanggalSuratKeluar') is-invalid @enderror" />
+                                <div>
+                                    @if ($errors->has('tanggalSuratKeluar'))
+                                        <small class="form-text text-danger">{{ $errors->first('tanggalSuratKeluar') }}</small>
                                     @endif
                                 </div>
                             </div>

@@ -18,6 +18,10 @@ class SuratKeluar extends Model
         'lampiran',
         'catatan',
         'sifatSurat',
-        'tanggalSurat'
+        'tanggalSurat',
+        'tanggalSuratKeluar',
+        'ditujukanKe',
+
+
     ];
 }

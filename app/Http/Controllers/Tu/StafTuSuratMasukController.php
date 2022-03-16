@@ -23,7 +23,7 @@ class StafTuSuratMasukController extends Controller
         $surat_masuks = SuratMasuk::join('tb_jenis_surat','tb_jenis_surat.id','tb_surat_masuk.jenisSuratId')
                         ->join('tb_user','tb_user.id','tb_surat_masuk.penginputId')
                         ->select('tb_surat_masuk.id','jenisSurat','pengirimSurat','nomorSurat','perihal',
-                                'tujuan','lampiran','catatan','sifatSurat','tanggalSurat','statusTeruskan',
+                                'tujuan','lampiran','catatan','sifatSurat','tanggalSurat','tanggalSuratMasuk','statusTeruskan',
                                 'statusBaca','tb_surat_masuk.created_at','namaUser as namaPenginput')
                         ->orderBy('created_at','desc')
                         ->get();
@@ -66,6 +66,9 @@ class StafTuSuratMasukController extends Controller
             'catatan'  =>  'required',
             'sifatSurat'  =>  'required',
             'tanggalSurat'  =>  'required',
+            'tanggalSuratMasuk'  =>  'required',
+
+            
         ],$messages,$attributes);
 
         $model = $request->all();
@@ -88,6 +91,8 @@ class StafTuSuratMasukController extends Controller
             'catatan'=>  $request->catatan,
             'sifatSurat'=>  $request->sifatSurat,
             'tanggalSurat'=>  $request->tanggalSurat,
+            'tanggalSuratMasuk'=>  $request->tanggalSuratMasuk,
+
             'penginputId'   =>  Auth::user()->id,
         ]);
 
@@ -218,6 +223,8 @@ class StafTuSuratMasukController extends Controller
             'catatan'=>  $request->catatan,
             'sifatSurat'=>  $request->sifatSurat,
             'tanggalSurat'=>  $request->tanggalSurat,
+            'tanggalSuratMasuk'=>  $request->tanggalSuratMasuk,
+
             // 'statusTeruskan'=>  $request->statusTeruskan,
             // 'statusBaca'=>  $request->statusBaca,
             'lampiran'    =>  $model['lampiran'],
